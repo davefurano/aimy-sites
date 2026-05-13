@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard — Brion Wise</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#185FA5;--bm:#185FA518}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Inter',sans-serif;background:#f5f7fa;color:#0d1117;display:flex}
+.rail{width:232px;flex-shrink:0;background:#fff;border-right:1px solid #e8ecf0;display:flex;flex-direction:column;height:100vh;transition:width .2s}
+.rail.col{width:58px}
+.rh{padding:1.1rem .9rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f0f2f5;min-height:60px}
+.rlogo{font-family:'Syne',sans-serif;font-weight:800;font-size:.9rem;color:var(--brand);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cbtn{width:26px;height:26px;border-radius:6px;border:1px solid #e8ecf0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#6b7280;font-size:11px;transition:background .12s}
+.cbtn:hover{background:#f5f7fa}
+.rail.col .cbtn span{transform:rotate(180deg);display:inline-block}
+.ru{padding:.8rem .9rem;display:flex;align-items:center;gap:.6rem;border-bottom:1px solid #f0f2f5;cursor:pointer;transition:background .12s}
+.ru:hover{background:#f9fafb}
+.av{width:30px;height:30px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0}
+.ui{overflow:hidden;flex:1}
+.un{font-size:.78rem;font-weight:600;color:#0d1117;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ut{font-size:.65rem;color:#9ca3af;margin-top:1px}
+.tb{display:inline-block;background:var(--bm);color:var(--brand);padding:1px 5px;border-radius:8px;font-weight:700;font-size:.62rem}
+.rail.col .ui,.rail.col .rlogo{display:none}
+.rnav{flex:1;overflow-y:auto;padding:.4rem 0}
+.ns{margin-bottom:.2rem}
+.nsl{font-size:.6rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9ca3af;padding:.5rem .9rem .2rem;white-space:nowrap}
+.rail.col .nsl{display:none}
+.ni{display:flex;align-items:center;gap:.6rem;padding:.5rem .9rem;font-size:.8rem;font-weight:500;color:#4b5563;cursor:pointer;border-radius:6px;margin:0 .35rem;transition:all .12s;white-space:nowrap;text-decoration:none}
+.ni:hover{background:#f5f7fa;color:#0d1117}
+.ni.act{background:var(--bm);color:var(--brand)}
+.nico{font-size:14px;flex-shrink:0;width:18px;text-align:center}
+.rail.col .nlbl{display:none}
+.ub{padding:.8rem .9rem;border-top:1px solid #f0f2f5;border-bottom:1px solid #f0f2f5}
+.rail.col .ub{display:none}
+.ubl{font-size:.68rem;color:#9ca3af;margin-bottom:.35rem;display:flex;justify-content:space-between}
+.ubar{height:4px;background:#e8ecf0;border-radius:2px;overflow:hidden}
+.ufill{height:100%;background:var(--brand);border-radius:2px;transition:width .3s}
+.uup{font-size:.68rem;color:var(--brand);margin-top:.35rem;cursor:pointer;font-weight:500}
+.rf{padding:.4rem 0}
+.main{flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden}
+.topbar{height:60px;background:#fff;border-bottom:1px solid #e8ecf0;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;flex-shrink:0}
+.tl{display:flex;align-items:center;gap:.65rem}
+.pt{font-size:.95rem;font-weight:600;color:#0d1117}
+.tr{display:flex;align-items:center;gap:.65rem}
+.tbtn{width:32px;height:32px;border-radius:7px;border:1px solid #e8ecf0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:#6b7280}
+.tbtn:hover{background:#f5f7fa}
+.upbtn{background:var(--brand);color:#fff;border:none;padding:.4rem .9rem;border-radius:6px;font-size:.75rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer}
+.content{flex:1;overflow-y:auto;padding:1.5rem}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.9rem;margin-bottom:1.5rem}
+.sc{background:#fff;border:1px solid #e8ecf0;border-radius:11px;padding:1.1rem}
+.sc.ac{background:var(--brand);border-color:var(--brand)}
+.slbl{font-size:.65rem;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem}
+.sc.ac .slbl{color:rgba(255,255,255,.7)}
+.sval{font-size:1.6rem;font-weight:700;color:#0d1117;line-height:1}
+.sc.ac .sval{color:#fff}
+.ssub{font-size:.7rem;color:#9ca3af;margin-top:.3rem}
+.sc.ac .ssub{color:rgba(255,255,255,.6)}
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem}
+.st{font-size:.9rem;font-weight:600}
+.sa{font-size:.75rem;color:var(--brand);cursor:pointer;font-weight:500}
+.dg{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.75rem;margin-bottom:1.5rem}
+.dc{background:#fff;border:1px solid #e8ecf0;border-radius:9px;overflow:hidden;cursor:pointer;transition:border-color .15s,transform .15s;text-decoration:none}
+.dc:hover{border-color:#c4c9d4;transform:translateY(-1px)}
+.dt{height:65px;display:flex;align-items:center;justify-content:center;font-size:1.4rem}
+.db{padding:.6rem .8rem}
+.dn{font-size:.78rem;font-weight:600;color:#0d1117;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.du{font-size:.65rem;color:#9ca3af;margin-top:.1rem}
+.al{background:#fff;border:1px solid #e8ecf0;border-radius:11px;overflow:hidden}
+.ai{display:flex;align-items:center;gap:.8rem;padding:.8rem 1.1rem;border-bottom:1px solid #f5f7fa}
+.ai:last-child{border-bottom:none}
+.adot{width:7px;height:7px;border-radius:50%;background:var(--brand);flex-shrink:0}
+.at{font-size:.8rem;color:#4b5563;flex:1}
+.atm{font-size:.7rem;color:#9ca3af}
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:1000}
+.mo.open{display:flex}
+.mc{background:#fff;border-radius:14px;padding:1.75rem;width:100%;max-width:380px;position:relative}
+.mct{font-size:1rem;font-weight:700;margin-bottom:.3rem}
+.mcs{font-size:.82rem;color:#6b7280;margin-bottom:1.25rem}
+.mcl{position:absolute;top:.85rem;right:.85rem;width:26px;height:26px;border-radius:6px;border:1px solid #e8ecf0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;color:#6b7280}
+.po{border:1.5px solid var(--brand);border-radius:9px;padding:.9rem;cursor:pointer;margin-bottom:.6rem}
+.po2{border:1px solid #e8ecf0;border-radius:9px;padding:.9rem;cursor:pointer}
+.pn{font-weight:700;font-size:.85rem;color:var(--brand)}
+.po2 .pn{color:#0d1117}
+.pd{font-size:.75rem;color:#6b7280;margin-top:.2rem}
+.py{font-size:.68rem;color:#9ca3af;margin-top:.2rem}
+</style></head><body>
+<nav class="rail" id="rail">
+  <div class="rh">
+    <div class="rlogo">Brion Wise</div>
+    <button class="cbtn" onclick="tog()"><span>◀</span></button>
+  </div>
+  <div class="ru" onclick="document.getElementById('umo').classList.add('open')">
+    <div class="av" id="av">?</div>
+    <div class="ui"><div class="un" id="un">Loading...</div><div class="ut">Plan: <span class="tb" id="utr">Free</span></div></div>
+  </div>
+  <div class="rnav">
+    <div class="ns"><div class="nsl">Main</div>
+      <a class="ni act" href="/dashboard.html"><span class="nico">⊞</span><span class="nlbl">Dashboard</span></a>
+      <a class="ni" href="/tools.html"><span class="nico">⚡</span><span class="nlbl">AI Tools</span></a>
+      <a class="ni" href="/usage.html"><span class="nico">📊</span><span class="nlbl">My Usage</span></a>
+      <a class="ni" href="/subscription.html"><span class="nico">💳</span><span class="nlbl">Subscription</span></a>
+    </div>
+    <div class="ns"><div class="nsl">Network</div>
+      <a class="ni" href="https://aimyservice.com" target="_blank"><span class="nico">🌐</span><span class="nlbl">Browse Network</span></a>
+      <a class="ni" href="/profile.html"><span class="nico">👤</span><span class="nlbl">My Profile</span></a>
+    </div>
+    <div class="ns" id="admnav" style="display:none"><div class="nsl">Admin</div>
+      <a class="ni" href="/admin.html"><span class="nico">🛡</span><span class="nlbl">Admin Panel</span></a>
+    </div>
+  </div>
+  <div class="ub">
+    <div class="ubl"><span>AI queries today</span><span id="utxt">0/10</span></div>
+    <div class="ubar"><div class="ufill" id="uf" style="width:0%"></div></div>
+    <div class="uup" onclick="document.getElementById('upmo').classList.add('open')">↑ Upgrade for more</div>
+  </div>
+  <div class="rf">
+    <a class="ni" href="/settings.html"><span class="nico">⚙</span><span class="nlbl">Settings</span></a>
+    <a class="ni" href="/help.html"><span class="nico">?</span><span class="nlbl">Help</span></a>
+    <div class="ni" onclick="signOut()"><span class="nico">→</span><span class="nlbl">Sign out</span></div>
+  </div>
+</nav>
+<div class="main">
+  <div class="topbar">
+    <div class="tl"><button class="tbtn" onclick="tog()">☰</button><div class="pt">Dashboard</div></div>
+    <div class="tr">
+      <button class="tbtn">🔔</button>
+      <button class="upbtn" onclick="document.getElementById('upmo').classList.add('open')" id="upbtn">Upgrade to Pro</button>
+    </div>
+  </div>
+  <div class="content">
+    <div class="sg">
+      <div class="sc ac"><div class="slbl">AI queries today</div><div class="sval" id="su">0</div><div class="ssub" id="slim">of 10 on Free</div></div>
+      <div class="sc"><div class="slbl">Current plan</div><div class="sval" id="spl">Free</div><div class="ssub">Upgrade for more</div></div>
+      <div class="sc"><div class="slbl">Member since</div><div class="sval" id="smb">—</div><div class="ssub">Welcome!</div></div>
+      <div class="sc"><div class="slbl">Network access</div><div class="sval">93</div><div class="ssub">domains available</div></div>
+    </div>
+    <div class="sh"><div class="st">Browse the network</div><div class="sa" onclick="window.open('https://aimyservice.com','_blank')">View all →</div></div>
+    <div class="dg" id="dg"></div>
+    <div class="sh"><div class="st">Recent activity</div></div>
+    <div class="al" id="al">
+      <div class="ai"><div class="adot"></div><div class="at">Account created — welcome to Brion Wise</div><div class="atm">just now</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Upgrade modal -->
+<div class="mo" id="upmo">
+  <div class="mc">
+    <button class="mcl" onclick="document.getElementById('upmo').classList.remove('open')">✕</button>
+    <div class="mct">Upgrade your plan</div>
+    <div class="mcs">More AI queries, priority support, and advanced features.</div>
+    <div class="po" onclick="alert('Stripe coming soon!')">
+      <div class="pn">Pro — $9/mo</div>
+      <div class="pd">500 AI queries/day · Priority support · Advanced features</div>
+      <div class="py">or $79/yr — save $29</div>
+    </div>
+    <div class="po2" onclick="alert('Stripe coming soon!')">
+      <div class="pn">Business — $29/mo</div>
+      <div class="pd">Unlimited AI · Team seats · API access · Dedicated support</div>
+      <div class="py">or $249/yr — save $99</div>
+    </div>
+  </div>
+</div>
+
+<!-- User modal -->
+<div class="mo" id="umo">
+  <div class="mc">
+    <button class="mcl" onclick="document.getElementById('umo').classList.remove('open')">✕</button>
+    <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1.1rem">
+      <div class="av" style="width:40px;height:40px;font-size:.85rem" id="mav">?</div>
+      <div><div style="font-weight:700;font-size:.9rem" id="mnm">—</div><div style="font-size:.78rem;color:#9ca3af" id="mem">—</div></div>
+    </div>
+    <div style="display:grid;gap:.4rem">
+      <a href="/profile.html" style="display:block;padding:.6rem .8rem;border-radius:7px;font-size:.82rem;color:#374151;text-decoration:none;border:1px solid #e8ecf0">👤 My Profile</a>
+      <a href="/subscription.html" style="display:block;padding:.6rem .8rem;border-radius:7px;font-size:.82rem;color:#374151;text-decoration:none;border:1px solid #e8ecf0">💳 Subscription</a>
+      <div onclick="signOut()" style="padding:.6rem .8rem;border-radius:7px;font-size:.82rem;color:#dc2626;cursor:pointer;border:1px solid #fecaca">→ Sign out</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const{createClient}=supabase;
+const sb=createClient('https://yourhspxqggfhbsjpsnq.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlvdXJoc3B4cWdnZmhic2pwc25xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3MjMxMTksImV4cCI6MjA3MzI5OTExOX0.2YPm1xP8RhfShzItK1RXxa1_Gcmw56jqt3NskoPVr3k');
+let col=false;
+function tog(){col=!col;document.getElementById('rail').classList.toggle('col',col);}
+document.querySelectorAll('.mo').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open')}));
+async function init(){
+  const{data:{session}}=await sb.auth.getSession();
+  if(!session){location.href='/login.html';return;}
+  const u=session.user;
+  const{data:p}=await sb.from('profiles').select('*').eq('id',u.id).single();
+  if(!p)return;
+  const nm=p.full_name||u.email.split('@')[0];
+  const ini=nm.split(' ').map(x=>x[0]).join('').toUpperCase().slice(0,2);
+  const mb=new Date(p.created_at).toLocaleDateString('en-US',{month:'short',year:'numeric'});
+  ['av','mav'].forEach(id=>document.getElementById(id).textContent=ini);
+  document.getElementById('un').textContent=nm;
+  document.getElementById('mnm').textContent=nm;
+  document.getElementById('mem').textContent=u.email;
+  document.getElementById('smb').textContent=mb;
+  if(p.is_admin)document.getElementById('admnav').style.display='block';
+  const{data:d}=await sb.from('domains').select('id').eq('domain','brionwise.com').single();
+  if(d){
+    const{data:sub}=await sb.from('subscriptions').select('*,subscription_tiers(*)').eq('user_id',u.id).eq('domain_id',d.id).single();
+    if(sub){
+      const tn=sub.subscription_tiers.display_name;
+      document.getElementById('utr').textContent=tn;
+      document.getElementById('spl').textContent=tn;
+      if(tn!=='Free')document.getElementById('upbtn').style.display='none';
+    }
+    const{data:usage}=await sb.from('ai_usage').select('query_count').eq('user_id',u.id).eq('domain_id',d.id).eq('date',new Date().toISOString().split('T')[0]).single();
+    const used=usage?.query_count||0;
+    const lim=sub?.subscription_tiers?.ai_queries_per_day||10;
+    document.getElementById('utxt').textContent=used+'/'+(lim===999999?'∞':lim);
+    document.getElementById('uf').style.width=Math.min(used/lim*100,100)+'%';
+    document.getElementById('su').textContent=used;
+    document.getElementById('slim').textContent='of '+(lim===999999?'unlimited':lim)+' on your plan';
+  }
+  const{data:doms}=await sb.from('domains').select('*').eq('is_active',true).limit(8);
+  if(doms)document.getElementById('dg').innerHTML=doms.map(x=>`<a class="dc" href="https://${x.domain}" target="_blank"><div class="dt" style="background:${x.color}18"><span style="font-size:1.4rem">${x.icon||'⚡'}</span></div><div class="db"><div class="dn">${x.name}</div><div class="du">${x.domain}</div></div></a>`).join('');
+}
+async function signOut(){await sb.auth.signOut();location.href='/login.html';}
+init();
+</script>
+</body></html>

@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grateful Dave — Living the Grateful life</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand: #444441;
+    --brand-rgb: 68,68,65;
+    --bg: #080810;
+    --surface: #0e0e1a;
+    --border: rgba(68,68,65,0.2);
+    --text: #f0f0f8;
+    --muted: rgba(240,240,248,0.5);
+    --glow: rgba(68,68,65,0.15);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Geist', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(8,8,16,0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.15rem;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .nav-logo span { color: var(--brand); }
+  .nav-actions { display: flex; gap: .75rem; align-items: center; }
+  .nav-link {
+    font-size: .8rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color .2s;
+  }
+  .nav-link:hover { color: var(--text); }
+  .nav-btn {
+    font-size: .8rem;
+    font-weight: 600;
+    font-family: 'Geist', sans-serif;
+    color: var(--bg);
+    background: var(--brand);
+    border: none;
+    padding: .5rem 1.25rem;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: opacity .2s, transform .15s;
+    letter-spacing: .01em;
+  }
+  .nav-btn:hover { opacity: .85; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 5rem;
+    overflow: hidden;
+  }
+  .hero-orb {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(var(--brand-rgb),0.2) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    pointer-events: none;
+    animation: pulse 4s ease-in-out infinite;
+  }
+  .hero-orb-2 {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(var(--brand-rgb),0.1) 0%, transparent 70%);
+    top: 30%;
+    right: 15%;
+    pointer-events: none;
+    animation: pulse 6s ease-in-out infinite reverse;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: .7; transform: translate(-50%,-50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%,-50%) scale(1.05); }
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(var(--brand-rgb),0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(var(--brand-rgb),0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--brand);
+    background: rgba(var(--brand-rgb), 0.1);
+    border: 1px solid rgba(var(--brand-rgb), 0.25);
+    padding: .4rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp .6s ease both;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--brand);
+    animation: blink 2s ease infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2.75rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    max-width: 800px;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp .6s .1s ease both;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--brand);
+  }
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.75;
+    margin-bottom: 3rem;
+    font-weight: 300;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp .6s .2s ease both;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp .6s .3s ease both;
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font-family: 'Geist', sans-serif;
+    font-size: .9rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--brand);
+    border: none;
+    padding: .85rem 2rem;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all .2s;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity .2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(var(--brand-rgb),0.4); }
+  .btn-primary:hover::after { opacity: 1; }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-ghost {
+    font-family: 'Geist', sans-serif;
+    font-size: .9rem;
+    font-weight: 500;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: .85rem 2rem;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all .2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .btn-ghost:hover { color: var(--text); border-color: rgba(var(--brand-rgb),0.4); background: rgba(var(--brand-rgb),0.05); }
+
+  /* ── FEATURES ── */
+  .features-section {
+    padding: 7rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  .section-eyebrow {
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--brand);
+    margin-bottom: .75rem;
+  }
+  .section-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--text);
+  }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5px;
+    background: var(--border);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .feat {
+    background: var(--surface);
+    padding: 2.25rem;
+    transition: background .2s;
+    animation: fadeUp .5s ease both;
+  }
+  .feat:hover { background: rgba(var(--brand-rgb),0.05); }
+  .feat-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    display: block;
+    filter: drop-shadow(0 0 8px rgba(var(--brand-rgb),0.4));
+  }
+  .feat-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.15rem;
+    color: var(--text);
+    margin-bottom: .6rem;
+    letter-spacing: -0.01em;
+  }
+  .feat-desc {
+    font-size: .85rem;
+    color: var(--muted);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ── CTA SECTION ── */
+  .cta-section {
+    padding: 7rem 2rem;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .cta-inner {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 3.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-inner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--brand), transparent);
+  }
+  .cta-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2.25rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: .75rem;
+    line-height: 1.1;
+  }
+  .cta-sub {
+    font-size: .9rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+  .signup-form {
+    display: flex;
+    gap: 0;
+    max-width: 420px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    overflow: hidden;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .signup-form:focus-within {
+    border-color: rgba(var(--brand-rgb), 0.5);
+    box-shadow: 0 0 0 4px rgba(var(--brand-rgb), 0.1);
+  }
+  .signup-form input {
+    flex: 1;
+    padding: .85rem 1.25rem;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: .875rem;
+    font-family: 'Geist', sans-serif;
+    color: var(--text);
+  }
+  .signup-form input::placeholder { color: rgba(240,240,248,0.3); }
+  .signup-btn {
+    font-family: 'Geist', sans-serif;
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--bg);
+    background: var(--brand);
+    border: none;
+    padding: .75rem 1.5rem;
+    margin: 4px;
+    border-radius: 100px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all .2s;
+    letter-spacing: .01em;
+  }
+  .signup-btn:hover { opacity: .88; transform: scale(1.02); }
+  .signup-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+  .signup-btn.success {
+    background: #16a34a;
+    color: #fff;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: .78rem;
+    color: var(--muted);
+    position: relative;
+    z-index: 1;
+  }
+  footer a { color: var(--muted); text-decoration: none; transition: color .2s; }
+  footer a:hover { color: var(--text); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 4rem; }
+    .features-section { padding: 4rem 1.5rem; }
+    .cta-section { padding: 4rem 1.5rem; }
+    .cta-inner { padding: 2.5rem 1.5rem; }
+    footer { flex-direction: column; gap: .5rem; text-align: center; padding: 1.5rem; }
+    .signup-form { flex-direction: column; border-radius: 12px; }
+    .signup-btn { margin: 0 4px 4px; border-radius: 8px; padding: .85rem; }
+  }
+
+  /* ── SIGNUP COMPONENT ── */
+  .signup-wrap {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .signup-row {
+    display: flex;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color .25s, box-shadow .25s;
+    position: relative;
+  }
+  .signup-row:focus-within {
+    border-color: rgba(var(--brand-rgb),0.6);
+    box-shadow: 0 0 0 4px rgba(var(--brand-rgb),0.12), 0 4px 24px rgba(0,0,0,0.3);
+  }
+  .signup-input {
+    flex: 1;
+    padding: 1rem 1.25rem;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: .9rem;
+    font-family: inherit;
+    color: #f0f0f8;
+    min-width: 0;
+  }
+  .signup-input::placeholder { color: rgba(240,240,248,0.25); }
+  .signup-submit {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-family: inherit;
+    font-size: .82rem;
+    font-weight: 600;
+    letter-spacing: .03em;
+    color: #fff;
+    background: var(--brand);
+    border: none;
+    padding: .85rem 1.5rem;
+    margin: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all .2s;
+    min-width: 130px;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .signup-submit::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity .2s;
+  }
+  .signup-submit:hover::before { opacity: 1; }
+  .signup-submit:hover { transform: scale(1.02); box-shadow: 0 4px 20px rgba(var(--brand-rgb),0.4); }
+  .signup-submit:active { transform: scale(0.98); }
+  .signup-submit:disabled { opacity: .7; cursor: not-allowed; transform: none; }
+  .signup-submit.sending { background: rgba(var(--brand-rgb),0.7); }
+  .signup-submit.success { background: #16a34a; }
+  .signup-submit.error { background: #dc2626; }
+  .btn-icon { font-size: 1rem; transition: transform .2s; }
+  .signup-submit:hover .btn-icon { transform: translateX(2px); }
+  .signup-status {
+    text-align: center;
+    font-size: .78rem;
+    margin-top: .75rem;
+    height: 1.2em;
+    color: rgba(240,240,248,0.45);
+    transition: all .3s;
+  }
+  .signup-status.ok { color: #4ade80; }
+  .signup-status.err { color: #f87171; }
+  /* Spinner */
+  .spin {
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin .6s linear infinite;
+    display: none;
+  }
+  .signup-submit.sending .spin { display: block; }
+  .signup-submit.sending .btn-label { display: none; }
+  .signup-submit.sending .btn-icon { display: none; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (max-width: 480px) {
+    .signup-row { flex-direction: column; border-radius: 12px; }
+    .signup-submit { margin: 0 5px 5px; border-radius: 8px; min-width: auto; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">💀 Grateful Dave</div>
+  <div class="nav-actions">
+    <a href="/login.html" class="nav-link">Sign in</a>
+    <button class="nav-btn" onclick="document.getElementById('signup-input').focus()">Join the List</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-orb-2"></div>
+  <div class="hero-tag">Living the Grateful life</div>
+  <h1>Grateful Dave</h1>
+  <p class="hero-sub">Dave Furano's Grateful Dead journey — shows, memories, community, and the culture that never dies.</p>
+  <div class="hero-cta">
+    <button class="btn-primary" onclick="document.getElementById('signup-input').focus()">Join the List →</button>
+    <a href="/login.html" class="btn-ghost">Sign in</a>
+  </div>
+</section>
+
+<section class="features-section">
+  <div class="section-header">
+    <div class="section-eyebrow">What we offer</div>
+    <div class="section-title">Built different.<br>Built to last.</div>
+  </div>
+  <div class="features-grid">
+        <div class="feat" style="animation-delay:0.0s">
+          <div class="feat-icon">👤</div>
+          <div class="feat-title">Personal</div>
+          <p class="feat-desc">Built around you — your preferences, your life, your way.</p>
+        </div>
+        <div class="feat" style="animation-delay:0.1s">
+          <div class="feat-icon">🔒</div>
+          <div class="feat-title">Private</div>
+          <p class="feat-desc">Your data stays yours. Always private, always secure.</p>
+        </div>
+        <div class="feat" style="animation-delay:0.2s">
+          <div class="feat-icon">🧠</div>
+          <div class="feat-title">Intelligent</div>
+          <p class="feat-desc">Gets smarter about you over time, anticipating what you need.</p>
+        </div>
+        <div class="feat" style="animation-delay:0.30000000000000004s">
+          <div class="feat-icon">∞</div>
+          <div class="feat-title">Always available</div>
+          <p class="feat-desc">Available whenever you need it, on any device.</p>
+        </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-title">Join the List.</div>
+    <p class="cta-sub">Be among the first to access.</p>
+        <div class="signup-wrap">
+      <div class="signup-row">
+        <input type="email" id="signup-input" class="signup-input" placeholder="your@email.com" autocomplete="email">
+        <button id="signup-btn" class="signup-submit idle">
+          <span class="spin"></span>
+          <span class="btn-label">Join the List</span>
+          <span class="btn-icon">&#8594;</span>
+        </button>
+      </div>
+      <div id="signup-status" class="signup-status"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 gratefuldave.com</span>
+  <span>Part of the <a href="https://aimyservice.com">AI My Service</a> network</span>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function() {
+  var DOMAIN_ID = "a598e1c7-6ccd-43bb-aa07-a4ba56ae0e7f";
+  var sb = supabase.createClient("https://yourhspxqggfhbsjpsnq.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlvdXJoc3B4cWdnZmhic2pwc25xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3MjMxMTksImV4cCI6MjA3MzI5OTExOX0.2YPm1xP8RhfShzItK1RXxa1_Gcmw56jqt3NskoPVr3k");
+  var input = document.getElementById("signup-input");
+  var btn   = document.getElementById("signup-btn");
+  var status = document.getElementById("signup-status");
+
+  if (!input || !btn) return;
+
+  function setState(state) {
+    btn.className = "signup-submit " + state;
+    btn.disabled = (state === "sending" || state === "success");
+    var labels = {
+      "idle":    ["Join the List", "arrow"],
+      "sending": ["", ""],
+      "success": ["Confirmed", "check"],
+      "error":   ["Try Again", "retry"]
+    };
+    var l = labels[state] || labels["idle"];
+    var labelEl = btn.querySelector(".btn-label");
+    var iconEl  = btn.querySelector(".btn-icon");
+    if (labelEl) labelEl.textContent = l[0];
+    if (iconEl) {
+      var icons = { arrow: "\u2192", check: "\u2713", retry: "\u21BA" };
+      iconEl.textContent = icons[l[1]] || "";
+    }
+  }
+
+  function setStatus(msg, type) {
+    if (!status) return;
+    status.textContent = msg;
+    status.className = "signup-status " + (type || "");
+  }
+
+  function doSignup() {
+    var email = input.value.trim();
+    if (!email || email.indexOf("@") < 0) {
+      input.focus();
+      input.style.outline = "2px solid rgba(239,68,68,0.5)";
+      setStatus("Please enter a valid email address.", "err");
+      setTimeout(function() {
+        input.style.outline = "";
+        setStatus("");
+      }, 2000);
+      return;
+    }
+
+    setState("sending");
+    setStatus("Sending...");
+
+    sb.from("email_signups").insert({
+      email: email.toLowerCase(),
+      domain_id: DOMAIN_ID,
+      source: "landing_page",
+      subscribed: true
+    }).then(function(result) {
+      if (!result.error || result.error.code === "23505") {
+        setState("success");
+        setStatus("You are on the list. Check your email.", "ok");
+        input.value = "";
+        input.placeholder = "See you soon";
+      } else {
+        setState("error");
+        setStatus("Something went wrong. Please try again.", "err");
+        setTimeout(function() { setState("idle"); setStatus(""); }, 3000);
+      }
+    }).catch(function() {
+      setState("error");
+      setStatus("Connection error. Please try again.", "err");
+      setTimeout(function() { setState("idle"); setStatus(""); }, 3000);
+    });
+  }
+
+  btn.addEventListener("click", doSignup);
+  input.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") doSignup();
+  });
+})();
+</script>
+</body>
+</html>

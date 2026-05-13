@@ -1,0 +1,40 @@
+name: Deploy to Porkbun
+
+# Auto-deploy to Porkbun cPanel via FTP on every push to main.
+# Credentials live in GitHub Secrets, never in the repo.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # lets you trigger a manual deploy from the Actions tab
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          server-dir: ${{ secrets.FTP_PATH }}
+          # Porkbun supports AUTH TLS on port 21 but cert is *.porkbun.com
+          # (not *.aimyservice.com), so we allow hostname mismatch.
+          protocol: ftps
+          port: 21
+          security: loose
+          # Don't upload repo metadata or local-only files
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/.claude/**
+            **/.DS_Store
+            **/node_modules/**
+            **/supabase/**
+            README.md
+            .gitignore

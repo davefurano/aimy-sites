@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -sS -o /tmp/stripe_webhook_test.txt -w \"HTTP %{http_code}\\\\n\" -X POST https://xltunldffphrlqstujyg.supabase.co/functions/v1/stripe-webhook -H \"Content-Type: application/json\" -d '{}')",
+      "Read(//tmp/**)",
+      "Bash(curl -sS -o /tmp/bio_gen_test.txt -w \"HTTP %{http_code}\\\\n\" -X POST https://xltunldffphrlqstujyg.supabase.co/functions/v1/bio-generate -H \"Content-Type: application/json\" -d '{\"ping\":true}')",
+      "Bash(curl -sS -o /tmp/bio_sess_test.txt -w \"HTTP %{http_code}\\\\n\" -X POST https://xltunldffphrlqstujyg.supabase.co/functions/v1/bio-session -H \"Content-Type: application/json\" -d '{\"ping\":true}')",
+      "Bash(cat /Users/davefurano/Desktop/aimyservice/aimybiocom/pages/*.html)",
+      "Bash(grep -n \"REPLACE_ME\\\\|TODO\\\\|FIXME\\\\|undefined\\\\|null\" /Users/davefurano/Desktop/aimyservice/aimybiocom/js/*.js)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(curl -sS -o /dev/null -w \"esm.sh reachable: HTTP %{http_code}\\\\n\" \"https://esm.sh/@supabase/supabase-js@2.57.4\")",
+      "Bash(curl -sS -o /tmp/sc.txt -w \"stripe-checkout: HTTP %{http_code}\\\\n\" -X POST https://xltunldffphrlqstujyg.supabase.co/functions/v1/stripe-checkout -H \"Content-Type: application/json\" -d '{\"plan\":\"pro\"}')",
+      "Bash(node -e \"console.log\\(process.version\\)\")",
+      "mcp__desktop-commander__get_file_info",
+      "mcp__desktop-commander__interact_with_process",
+      "Bash(gh auth:*)",
+      "Bash(dig +short aimybio.com)",
+      "Bash(curl -sI https://aimybio.com --max-time 5)",
+      "Bash(curl -s https://aimybio.com --max-time 5)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git rm:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(git commit:*)",
+      "Bash(gh repo:*)",
+      "Bash(dig -x 34.215.132.29 +short)",
+      "Bash(dig +short NS aimybio.com)",
+      "Bash(dig +short MX aimybio.com)",
+      "Bash(curl -sI https://aimybio.com)",
+      "Bash(gh secret:*)",
+      "Bash(git push:*)",
+      "Bash(gh run:*)",
+      "Bash(curl -s https://aimybio.com --max-time 10)",
+      "Bash(curl -s https://aimybio.com/js/supabase.js --max-time 10)",
+      "Bash(curl -s https://aimybio.com/js/site-config.js --max-time 10)"
+    ]
+  }
+}

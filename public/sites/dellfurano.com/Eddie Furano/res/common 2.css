@@ -1,0 +1,281 @@
+/*
+ * Combined style sheet for the index pages and the slide pages, with classes that are common to both styles
+ */
+
+* {
+	box-sizing: border-box;
+}
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: stretch;
+	align-items: center;
+	min-height: 100vh;
+	padding: 0;
+	margin: 0;
+	font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+	font-size: 16px;
+	text-align: center;
+}
+.jalbumWidgetbar body {
+	margin-bottom: 20px;
+}
+.jalbumWidgetbar #slide-page.responsive footer#caption {
+    bottom: 25px;
+}
+a {
+	outline: 0;
+}
+a:link, a:visited, a:active {
+	text-decoration: none
+}
+a:hover {
+	text-decoration: underline;
+}
+img {
+	border: none;
+	display: inline-block;
+	max-width: 100%;
+	height: auto;
+}
+.noborder {
+	border: none;
+}
+
+/************** Page title */
+#albumtitle,
+#foldertitle {
+	font-size: 1.75em;
+	margin: 30px 30px 15px;
+}
+#albumdescription,
+#foldercomment {
+	font-size: 1em;
+	max-width: 1056px;
+	margin: 0px 15px 10px;
+}
+
+/************** Navigation */
+#nav {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	max-width: 100%;
+	padding: 0 5px;
+	overflow: hidden;
+}
+#nav > .btn img {
+	height:  32px;
+	width:  32px;
+	margin: 10px;
+}
+
+/************** Thumbnails */
+#thumbnails {
+	display: flex;
+	flex-flow: row wrap;
+	flex: 1;
+	max-width: 1056px;
+	justify-content: center;
+	align-content: flex-start;
+	align-items: stretch;
+}
+#thumbnails > div {
+	display: flex;
+	flex-direction: column;
+	margin: 7px;
+}
+#thumbnails > div:not(.folder) {
+	width: 250px;
+	min-height: 250px;
+}
+#thumbnails > div.folder {
+	width: 250px;
+}
+#thumbnails.mixed > div:not(.folder) {
+	justify-content: flex-end;
+}
+#thumbnails > div > a {
+	display: flex;
+	justify-content: center;
+	position: relative;
+	overflow: hidden;
+	padding: 2px;
+}
+#thumbnails > div:not(.folder) > a {
+	height: 240px;
+}
+#thumbnails > div img {
+	display: block;
+	max-height: 100%;
+}
+#thumbnails.free-shape > div:not(.folder).no-caption > a {
+	flex: 1;
+	align-items: center;
+}
+#thumbnails.free-shape > div:not(.folder).has-caption > a {
+	flex: none;
+	align-items: flex-end;
+}
+#thumbnails.free-shape-folders > div.folder.no-caption > a {
+	flex: 1;
+	align-items: center;
+}
+#thumbnails.free-shape-folders > div.folder.has-caption > a {
+	flex: none;
+	align-items: flex-end;
+}
+#thumbnails.free-shape-folders > div.folder a {
+	height: 240px;
+}
+#thumbnails.free-shape.mixed > div:not(.folder) a {
+	flex: 1;
+}
+#thumbnails.mixed > .folder > a::after {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 90px;
+	max-height: 40%;
+	content: '';
+	background: url("folder.svg") center center no-repeat;
+	background-size: contain;
+}
+#thumbnails > div > div {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: 0.75em;
+	padding: 8px;
+}
+
+/************** Slide page */
+#slide-page.responsive {
+	height: 100vh;
+}
+.jalbumWidgetbar #slide-page {
+	height: calc(100vh - 20px);
+}
+#slide-page.non-responsive header {
+	margin-bottom: 15px;
+}
+#slide-page.responsive header {
+	position: fixed;
+	z-index: 99;
+}
+#slide-page.responsive header,
+#slide-page.responsive footer {
+	transition: background-color 500ms ease;
+}
+
+/************** Thumbnail navigation */
+#thumbnav {
+	display: flex;
+	justify-content: center;
+	align-items: stretch;
+	overflow: hidden;
+}
+#thumbnav > * {
+	display: flex;
+	flex-direction: column;
+    justify-content: center;
+	flex: none;
+	margin: 8px 3px;
+}
+#thumbnav img {
+	padding: 2px;
+}
+#thumbcurrent {
+	position: relative;
+}
+#thumbcurrent::after {
+	content: '';
+	position: absolute;
+	border: 6px solid transparent;
+	top: 100%;
+	left: 50%;
+	margin-left: -6px;
+	margin-top: -5px;
+}
+
+/************** Main image */
+#slideimage {
+	position: relative;
+	margin: 0;
+	padding: 15px;
+}
+.non-responsive #slideimage {
+	padding: 2px;	
+}
+.responsive #slideimage {
+	display: flex;
+	overflow: hidden;
+	min-height: 60vh;
+	flex: 1;
+}
+.responsive #slideimage img {
+	display: inline-block;
+	vertical-align: middle;
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+}
+#slideimage video {
+	outline: 0;
+	max-width: 100%;
+	max-height: 100%;
+	height: auto !important;
+	align-self: center;
+}
+
+/************** Prev / Next */
+#slide-prev {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 40%;
+	height: 100%;
+}
+#slide-prev:hover {
+	background: url("prev-img.svg") no-repeat left 40px center;
+}
+#slide-next {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 60%;
+	height: 100%;
+}
+#slide-next:hover {
+	background: url("next-img.svg") no-repeat right 40px center;
+}
+
+/************** Footer */
+#slide-page.responsive footer {
+	position: fixed;
+	bottom: 0;
+	z-index: 99;
+}
+#caption {
+	padding: 10px;
+}
+#caption audio {
+	width: 13rem;
+}
+#caption audio::-webkit-media-controls-current-time-display,
+#caption audio::-webkit-media-controls-time-remaining-display {
+    display: none;
+}
+#imagetitle {
+	font-size: 1.125em;
+	margin: 5px;
+}
+#slidecomment {
+	font-size: 0.875em;
+	padding: 10px 15px;
+}
+#creditlink {
+	opacity: 0.5;
+	font-size: 0.75em;
+	padding: 10px 15px;
+}

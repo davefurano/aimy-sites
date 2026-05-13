@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dave Furano — Domain Directory</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Inter",sans-serif;background:#f0f0f2;color:#111;-webkit-font-smoothing:antialiased}
+
+/* ── NAV ── */
+nav{background:#fff;border-bottom:1px solid #e0e0e0;padding:0 1.5rem;height:60px;display:flex;align-items:center;gap:1rem;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.nb{font-size:1.1rem;font-weight:800;color:#111;letter-spacing:-.03em;white-space:nowrap}
+.nb span{color:#e63000}
+.sw{flex:1;max-width:520px;margin:0 auto;position:relative}
+.si{width:100%;padding:.55rem 1rem .55rem 2.5rem;background:#f5f5f7;border:1.5px solid #e0e0e0;border-radius:10px;font-family:inherit;font-size:.875rem;color:#111;outline:none}
+.si:focus{background:#fff;border-color:#e63000}
+.si::placeholder{color:#999}
+.sico{position:absolute;left:.75rem;top:50%;transform:translateY(-50%);color:#aaa;pointer-events:none}
+.nc{font-size:.78rem;font-weight:600;color:#888;background:#f5f5f7;padding:.35rem .85rem;border-radius:20px;white-space:nowrap}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,#e63000 0%,#e6300099 100%);padding:2.5rem 1.5rem 2rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.07) 1px,transparent 1px);background-size:28px 28px}
+.hi{font-size:3rem;display:block;margin-bottom:.6rem;position:relative;z-index:1}
+.hero h1{font-size:clamp(1.8rem,4vw,3rem);font-weight:900;color:#fff;letter-spacing:-.04em;line-height:1.05;margin-bottom:.4rem;position:relative;z-index:1;text-shadow:0 2px 12px rgba(0,0,0,.2)}
+.hero p{font-size:.9rem;color:rgba(255,255,255,.85);font-weight:500;position:relative;z-index:1}
+
+/* ── FILTER BAR ── */
+.fb{background:#fff;border-bottom:1px solid #e0e0e0;padding:.65rem 1.5rem;display:flex;align-items:center;gap:.4rem;overflow-x:auto;scrollbar-width:none}
+.fb::-webkit-scrollbar{display:none}
+.cb{font-family:inherit;font-size:.73rem;font-weight:700;color:#111;background:#e2e2e6;border:1.5px solid #ccc;border-radius:20px;padding:.3rem .85rem;cursor:pointer;white-space:nowrap;transition:all .15s}
+.cb:hover{background:#d0d0d6;color:#000}
+.cb.on{background:#e63000;color:#fff;border-color:#e63000}
+
+/* ── STATS ── */
+.stats{background:#fff;border-bottom:1px solid #e0e0e0;padding:.45rem 1.5rem;display:flex;gap:2rem;font-size:.72rem;font-weight:600;color:#888}
+.stats strong{color:#111}
+
+/* ── GRID ── */
+.gw{padding:1.5rem;max-width:1600px;margin:0 auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem}
+
+/* ── CARD — matches aimyservice.com exactly ── */
+.card{background:#fff;border-radius:14px;overflow:hidden;text-decoration:none;display:block;box-shadow:0 2px 8px rgba(0,0,0,.07);transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-5px);box-shadow:0 20px 60px rgba(0,0,0,.16)}
+
+.thumb{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.ticon{font-size:100px;line-height:1;position:relative;z-index:2;filter:drop-shadow(0 8px 24px rgba(0,0,0,.45))}
+.tshine{position:absolute;top:-50%;left:-30%;width:70%;height:200%;background:linear-gradient(135deg,rgba(255,255,255,.2) 0%,transparent 50%);transform:skewX(-15deg);pointer-events:none;z-index:1}
+.tbot{position:absolute;bottom:0;left:0;right:0;padding:.65rem .85rem .7rem;background:linear-gradient(transparent,rgba(0,0,0,.88));z-index:3}
+.tname{font-size:.8rem;font-weight:800;color:#fff;line-height:1.2}
+.ttag{font-size:.68rem;color:rgba(255,255,255,.78);margin-top:2px}
+.tbadge{position:absolute;top:.6rem;right:.6rem;font-size:.6rem;font-weight:700;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.58);backdrop-filter:blur(4px);padding:.25rem .65rem;border-radius:5px;z-index:4}
+.plock{position:absolute;top:.6rem;left:.6rem;font-size:.75rem;font-weight:700;color:#fff;background:rgba(0,0,0,.45);padding:.2rem .5rem;border-radius:4px;z-index:4}
+
+/* Card body */
+.cbody{padding:.8rem 1rem .9rem}
+.cname{font-size:.9rem;font-weight:700;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cmeta{display:flex;align-items:center;justify-content:space-between;margin-top:.35rem}
+.cdom{font-size:.67rem;color:#aaa}
+.csrv{font-size:.62rem;font-weight:700;padding:.15rem .55rem;border-radius:4px}
+.csrv-ams{background:#ede9fe;color:#6d28d9}
+.csrv-dl{background:#fff7ed;color:#c2410c}
+.carr{font-size:.8rem;color:#e63000;font-weight:700;opacity:0;transition:opacity .15s}
+.card:hover .carr{opacity:1}
+
+.nores{grid-column:1/-1;text-align:center;padding:5rem 2rem;color:#999}
+footer{background:#fff;border-top:1px solid #e0e0e0;padding:1.25rem 1.5rem;display:flex;justify-content:space-between;align-items:center;font-size:.75rem;color:#aaa;margin-top:2rem}
+footer a{color:#888;text-decoration:none}
+@media(max-width:640px){
+  .nc{display:none}
+  .hero{padding:2rem 1rem 1.5rem}
+  .gw{padding:1rem}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.75rem}
+  .ticon{font-size:60px}
+}
+</style>
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://davefurano.com/">
+<meta property="og:title" content="Dave Furano — Domain Directory">
+<meta property="og:description" content="91 properties across AI, music, food, entertainment, and New Orleans culture.">
+<meta property="og:image" content="https://davefurano.com/og-image.jpg?v=2">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dave Furano — Domain Directory">
+<meta name="twitter:description" content="91 properties across AI, music, food, entertainment, and New Orleans culture.">
+<meta name="twitter:image" content="https://davefurano.com/og-image.jpg?v=2">
+</head>
+<body>
+<nav>
+  <div class="nb"><span>&#9889;</span> davefurano.com</div>
+  <div class="sw"><span class="sico">&#128269;</span><input type="text" id="search" class="si" placeholder="Search 91 domains..." autocomplete="off"></div>
+  <div class="nc" id="nc">91 domains</div>
+</nav>
+
+<div class="hero">
+  <span class="hi">&#127968;</span>
+  <h1>Domain Directory</h1>
+  <p>91 properties across AI, music, food, entertainment, and New Orleans culture.</p>
+</div>
+
+<div class="fb" id="fb">
+  <button class="cb on" data-c="all">All (91)</button>
+  <button class="cb" data-c="AI Services">AI Services</button>
+  <button class="cb" data-c="Avatar & Music Tech">Avatar</button>
+  <button class="cb" data-c="Music & Entertainment">Music</button>
+  <button class="cb" data-c="Food & Hospitality">Food</button>
+  <button class="cb" data-c="New Orleans">New Orleans</button>
+  <button class="cb" data-c="Social & Events">Social</button>
+  <button class="cb" data-c="Gaming & Casino">Gaming</button>
+  <button class="cb" data-c="Personal & Family">Personal</button>
+  <button class="cb" data-c="Protected">Protected</button>
+</div>
+
+<div class="stats">
+  <span><strong id="showing">91</strong> showing</span>
+  <span><strong>91</strong> total</span>
+  <span><strong>2</strong> servers</span>
+</div>
+
+<div class="gw"><div class="grid" id="grid"></div></div>
+
+<footer>
+  <span>&copy; 2026 davefurano.com &mdash; New Orleans, Louisiana</span>
+  <span>Also explore <a href="https://aimyservice.com">AIMyService</a> &nbsp;&middot;&nbsp; <a href="https://downloadlounge.com">DownloadLounge</a></span>
+</footer>
+
+<script>
+var D=[
+  // AI Services
+  {domain:"aaifactory.com",name:"AAI Factory",tagline:"Agentic AI Factory",cat:"AI Services",color:"#0C447C",icon:"⚙️",srv:"ams"},
+  {domain:"aiagencyforautomation.com",name:"AI Agency for Automation",tagline:"Done-for-you AI automation",cat:"AI Services",color:"#534AB7",icon:"🤖",srv:"ams"},
+  {domain:"aibiogenius.com",name:"AI BioGenius",tagline:"Accelerate Discovery",cat:"AI Services",color:"#0F6E56",icon:"🧬",srv:"dl"},
+  {domain:"aicareerplanner.com",name:"AI Career Planner",tagline:"Your AI-powered career roadmap",cat:"AI Services",color:"#185FA5",icon:"🗺️",srv:"ams"},
+  {domain:"aiforbars.com",name:"AI for Bars",tagline:"AI built for bar operators",cat:"AI Services",color:"#993C1D",icon:"🍸",srv:"ams"},
+  {domain:"aiforcasinos.com",name:"AI for Casinos",tagline:"Intelligence on the gaming floor",cat:"AI Services",color:"#3B6D11",icon:"🎰",srv:"ams"},
+  {domain:"aiforlongevity.dev",name:"AI for Longevity",tagline:"Decode Your Lifespan",cat:"AI Services",color:"#0F6E56",icon:"❤️",srv:"dl"},
+  {domain:"aiforrestaurants.com",name:"AI for Restaurants",tagline:"AI that works the back office",cat:"AI Services",color:"#D85A30",icon:"🍽️",srv:"ams"},
+  {domain:"aiintelligencefactory.com",name:"AI Intelligence Factory",tagline:"Founder-led AI implementation",cat:"AI Services",color:"#26215C",icon:"🏭",srv:"ams"},
+  {domain:"aijobscoach.com",name:"AI Jobs Coach",tagline:"Land the job. Own the room.",cat:"AI Services",color:"#185FA5",icon:"💼",srv:"ams"},
+  {domain:"ailunchclubs.com",name:"AI Lunch Clubs",tagline:"Learn AI over lunch",cat:"AI Services",color:"#3B6D11",icon:"🥗",srv:"ams"},
+  {domain:"aimusicmemories.com",name:"AI Music Memories",tagline:"Your memories, set to music",cat:"AI Services",color:"#993556",icon:"🎵",srv:"ams"},
+  {domain:"aimyarchive.com",name:"AI My Archive",tagline:"Your life, organized forever",cat:"AI Services",color:"#444441",icon:"🗄️",srv:"ams"},
+  {domain:"aimybio.com",name:"AI My Bio",tagline:"Professional bios in minutes",cat:"AI Services",color:"#534AB7",icon:"📝",srv:"ams"},
+  {domain:"aimycompany.app",name:"AI My Company",tagline:"Your company, run by AI",cat:"AI Services",color:"#2545e8",icon:"🏢",srv:"ams"},
+  {domain:"aimygifting.com",name:"AI My Gifting",tagline:"The perfect gift, every time",cat:"AI Services",color:"#993556",icon:"🎁",srv:"ams"},
+  {domain:"aimyinterview.com",name:"AI My Interview",tagline:"Practice until perfect",cat:"AI Services",color:"#185FA5",icon:"🎤",srv:"ams"},
+  {domain:"aimymusic.app",name:"AI My Music",tagline:"Your music business, supercharged",cat:"AI Services",color:"#9b4dff",icon:"🎵",srv:"ams"},
+  {domain:"aimyoffice.app",name:"AI My Office App",tagline:"Your office, run by AI",cat:"AI Services",color:"#0066cc",icon:"💼",srv:"ams"},
+  {domain:"aimyoffice.org",name:"AI My Office",tagline:"Your AI-powered back office",cat:"AI Services",color:"#0C447C",icon:"🏢",srv:"ams"},
+  {domain:"aimypractice.app",name:"AI My Practice App",tagline:"AI for every practice",cat:"AI Services",color:"#0F6E56",icon:"🦷",srv:"ams"},
+  {domain:"aimypractice.org",name:"AI My Practice",tagline:"Dental Practice Flow Diagnostic",cat:"AI Services",color:"#0F6E56",icon:"🦷",srv:"ams"},
+  {domain:"aimyrestaurant.app",name:"AI My Restaurant",tagline:"The restaurant AI that works",cat:"AI Services",color:"#8b3a00",icon:"🍽️",srv:"ams"},
+  {domain:"aimyservice.com",name:"AI My Service",tagline:"AI services hub",cat:"AI Services",color:"#534AB7",icon:"⚡",srv:"ams"},
+  {domain:"aimyservices.com",name:"AI My Services",tagline:"AI services on demand",cat:"AI Services",color:"#3C3489",icon:"🔧",srv:"ams"},
+  {domain:"aimyshopping.app",name:"AI My Shopping App",tagline:"Your AI personal shopper",cat:"AI Services",color:"#d4537e",icon:"🛍️",srv:"ams"},
+  {domain:"aimyshopping.com",name:"AI My Shopping",tagline:"Your AI shopping concierge",cat:"AI Services",color:"#D4537E",icon:"🛍️",srv:"ams"},
+  {domain:"aimysoundtrack.com",name:"AI My Soundtrack",tagline:"The soundtrack to your life",cat:"AI Services",color:"#993556",icon:"🎧",srv:"ams"},
+  {domain:"aisocietynews.com",name:"AI Society News",tagline:"AI impact on the world",cat:"AI Services",color:"#444441",icon:"📰",srv:"ams"},
+  {domain:"aiwisdomfactory.com",name:"AI Wisdom Factory",tagline:"Intelligence you can actually use",cat:"AI Services",color:"#26215C",icon:"🧠",srv:"ams"},
+  {domain:"aiwizards.work",name:"AI Wizards",tagline:"AI magic at work",cat:"AI Services",color:"#6d28d9",icon:"🪄",srv:"dl"},
+  {domain:"creativeintelligencesystem.com",name:"Creative Intelligence System",tagline:"AI for creative production",cat:"AI Services",color:"#BA7517",icon:"💡",srv:"ams"},
+  {domain:"repeatableintelligence.com",name:"Repeatable Intelligence",tagline:"Build AI that scales",cat:"AI Services",color:"#0C447C",icon:"🔁",srv:"ams"},
+  // Avatar & Music Tech
+  {domain:"allstaravatars.com",name:"All Star Avatars",tagline:"Elite avatar performers",cat:"Avatar & Music Tech",color:"#BA7517",icon:"⭐",srv:"ams"},
+  {domain:"avastage.com",name:"Ava Stage",tagline:"AI performers, live",cat:"Avatar & Music Tech",color:"#993C1D",icon:"🎭",srv:"ams"},
+  {domain:"avastar.app",name:"Avastar",tagline:"Your AI star performer",cat:"Avatar & Music Tech",color:"#BA7517",icon:"⭐",srv:"ams"},
+  {domain:"avastar.band",name:"Avastar Band",tagline:"AI music. Live energy.",cat:"Avatar & Music Tech",color:"#993C1D",icon:"🎸",srv:"ams"},
+  {domain:"avastarbar.com",name:"Avastar Bar",tagline:"AI-powered bar entertainment",cat:"Avatar & Music Tech",color:"#7B2D8B",icon:"🍸",srv:"ams"},
+  {domain:"avatarallstars.com",name:"Avatar All Stars",tagline:"The greatest AI performers",cat:"Avatar & Music Tech",color:"#854F0B",icon:"🌟",srv:"ams"},
+  {domain:"avatarhouseband.com",name:"Avatar House Band",tagline:"The AI house band experience",cat:"Avatar & Music Tech",color:"#26215C",icon:"🎸",srv:"ams"},
+  {domain:"avatarhousebands.com",name:"Avatar House Bands",tagline:"AI house bands worldwide",cat:"Avatar & Music Tech",color:"#3C3489",icon:"🎵",srv:"ams"},
+  {domain:"avatheater.com",name:"Ava Theater",tagline:"AI entertainment on stage",cat:"Avatar & Music Tech",color:"#993556",icon:"🎬",srv:"ams"},
+  {domain:"globaltix.app",name:"Global Tix",tagline:"Tickets without borders",cat:"Avatar & Music Tech",color:"#185FA5",icon:"🎟️",srv:"ams"},
+  {domain:"ticketsdirect.app",name:"Tickets Direct",tagline:"Direct from the source",cat:"Avatar & Music Tech",color:"#0C447C",icon:"🎫",srv:"ams"},
+  {domain:"worldsgreatestavatarhouseband.com",name:"Worlds Greatest Avatar House Band",tagline:"The definitive AI house band",cat:"Avatar & Music Tech",color:"#26215C",icon:"🏆",srv:"ams"},
+  {domain:"worldsgreatestavatarhousebands.com",name:"Worlds Greatest Avatar House Bands",tagline:"World-class AI entertainment",cat:"Avatar & Music Tech",color:"#3C3489",icon:"🥇",srv:"ams"},
+  {domain:"worldsgreatesthouseband.com",name:"Worlds Greatest House Band",tagline:"AI-powered house band franchise",cat:"Avatar & Music Tech",color:"#185FA5",icon:"🎙️",srv:"ams"},
+  {domain:"worldsgreatesthousebands.com",name:"Worlds Greatest House Bands",tagline:"Global AI band network",cat:"Avatar & Music Tech",color:"#0C447C",icon:"🌐",srv:"ams"},
+  // Music & Entertainment
+  {domain:"crowdfundedconcerts.com",name:"Crowdfunded Concerts",tagline:"The fans decide the show",cat:"Music & Entertainment",color:"#993556",icon:"🎸",srv:"dl"},
+  {domain:"historyofrock.com",name:"History of Rock",tagline:"The complete rock story",cat:"Music & Entertainment",color:"#26215C",icon:"🎵",srv:"dl"},
+  {domain:"martinerlichman.com",name:"Marty Erlichman",tagline:"Legendary music manager",cat:"Music & Entertainment",color:"#444441",icon:"🎙️",srv:"dl"},
+  {domain:"rememberingwinterland.com",name:"Remembering Winterland",tagline:"A legendary venue, remembered",cat:"Music & Entertainment",color:"#993556",icon:"🎸",srv:"dl"},
+  {domain:"thedick.show",name:"The Dick Show",tagline:"Entertainment and humor",cat:"Music & Entertainment",color:"#185FA5",icon:"🎙️",srv:"dl"},
+  {domain:"wallofbeer.com",name:"Wall of Beer",tagline:"The ultimate beer experience",cat:"Music & Entertainment",color:"#854F0B",icon:"🍺",srv:"dl"},
+  // Food & Hospitality
+  {domain:"breakfastandbrews.com",name:"Breakfast and Brews",tagline:"Morning done right",cat:"Food & Hospitality",color:"#854F0B",icon:"☕",srv:"dl"},
+  {domain:"brewsandbagels.com",name:"Brews and Bagels",tagline:"The perfect pairing",cat:"Food & Hospitality",color:"#854F0B",icon:"🥯",srv:"dl"},
+  {domain:"chefswhorock.com",name:"Chefs Who Rock",tagline:"Where culinary meets music",cat:"Food & Hospitality",color:"#993C1D",icon:"👨‍🍳",srv:"dl"},
+  {domain:"culinaryinstitutenola.com",name:"Culinary Institute NOLA",tagline:"New Orleans culinary excellence",cat:"Food & Hospitality",color:"#D85A30",icon:"🍽️",srv:"dl"},
+  {domain:"garagechicken.com",name:"Garage Chicken",tagline:"Scratch-made, seriously good",cat:"Food & Hospitality",color:"#B45309",icon:"🍗",srv:"dl"},
+  {domain:"neworleansculinaryinstitute.com",name:"NOCHI",tagline:"Emergency Feeding Readiness",cat:"Food & Hospitality",color:"#D85A30",icon:"🍽️",srv:"dl"},
+  {domain:"neworleanshospitalityinstitute.com",name:"NOHI",tagline:"Hospitality excellence",cat:"Food & Hospitality",color:"#993C1D",icon:"🏨",srv:"dl"},
+  {domain:"nolaculinaryinstitute.com",name:"NOLA Culinary Institute",tagline:"Cooking the city",cat:"Food & Hospitality",color:"#D85A30",icon:"🥘",srv:"dl"},
+  {domain:"proudtoserve.com",name:"Proud to Serve",tagline:"Service with purpose",cat:"Food & Hospitality",color:"#185FA5",icon:"🫡",srv:"dl"},
+  {domain:"rocknchicken.com",name:"Rock N Chicken",tagline:"Where rock meets chicken",cat:"Food & Hospitality",color:"#993C1D",icon:"🎸",srv:"dl"},
+  {domain:"scratchchicken.com",name:"Scratch Chicken",tagline:"Made from scratch, every time",cat:"Food & Hospitality",color:"#854F0B",icon:"🍗",srv:"dl"},
+  // New Orleans
+  {domain:"nolablockparty.com",name:"NOLA Block Party",tagline:"New Orleans street culture",cat:"New Orleans",color:"#3B6D11",icon:"🎷",srv:"dl"},
+  {domain:"nolalunchclub.com",name:"NOLA Lunch Club",tagline:"Experience New Orleans dining",cat:"New Orleans",color:"#D85A30",icon:"🥗",srv:"dl"},
+  {domain:"nolagoats.com",name:"NOLA GOATs",tagline:"The greatest dishes in New Orleans",cat:"New Orleans",color:"#D85A30",icon:"🏆",srv:"dl"},
+  {domain:"tastetournola.com",name:"Taste Tour NOLA",tagline:"Taste your way through New Orleans",cat:"New Orleans",color:"#993C1D",icon:"🌶️",srv:"dl"},
+  {domain:"foodiekrewe.com",name:"Foodie Krewe",tagline:"New Orleans food culture",cat:"New Orleans",color:"#3B6D11",icon:"🎭",srv:"dl"},
+  {domain:"foodieneworleans.com",name:"Foodie New Orleans",tagline:"The foodie guide to NOLA",cat:"New Orleans",color:"#D85A30",icon:"🍴",srv:"dl"},
+  // Social & Events
+  {domain:"cheerscentral.com",name:"Cheers Central",tagline:"Community celebrations",cat:"Social & Events",color:"#3B6D11",icon:"🎉",srv:"dl"},
+  {domain:"cheerssocial.com",name:"Cheers Social",tagline:"Social connections and events",cat:"Social & Events",color:"#3B6D11",icon:"👥",srv:"dl"},
+  {domain:"happyhoursocial.com",name:"Happy Hour Social",tagline:"Social events and gatherings",cat:"Social & Events",color:"#993C1D",icon:"🍹",srv:"dl"},
+  {domain:"auctionarium.com",name:"Auctionarium",tagline:"The auction experience",cat:"Social & Events",color:"#26215C",icon:"🔨",srv:"dl"},
+  {domain:"concertslots.com",name:"Concert Slots",tagline:"Find your seat",cat:"Social & Events",color:"#185FA5",icon:"🎪",srv:"dl"},
+  // Gaming & Casino
+  {domain:"fmgsf.com",name:"FMGSF",tagline:"Community initiative",cat:"Gaming & Casino",color:"#444441",icon:"🏘️",srv:"dl"},
+  {domain:"rockmuseum.com",name:"Rock Museum",tagline:"The story of rock",cat:"Gaming & Casino",color:"#26215C",icon:"🎸",srv:"dl"},
+  // Personal & Family
+  {domain:"downloadlounge.com",name:"Download Lounge",tagline:"Your download destination",cat:"Personal & Family",color:"#444441",icon:"⬇️",srv:"dl"},
+  {domain:"furanos.com",name:"Furanos",tagline:"The Furano family",cat:"Personal & Family",color:"#3B6D11",icon:"👨‍👩‍👧‍👦",srv:"dl"},
+  {domain:"lifeisabeautifulthing.com",name:"Life Is A Beautiful Thing",tagline:"Celebrate the beautiful moments",cat:"Personal & Family",color:"#993556",icon:"✨",srv:"dl"},
+  {domain:"talktomeinheaven.com",name:"Talk to Me in Heaven",tagline:"Keep the conversation going",cat:"Personal & Family",color:"#9b7fe8",icon:"☁️",srv:"dl"},
+  // Protected
+  {domain:"22914th.com",name:"22914th",tagline:"Protected property",cat:"Protected",color:"#555",icon:"🔒",srv:"dl",prot:true},
+  {domain:"7919willow.com",name:"7919 Willow",tagline:"Protected property",cat:"Protected",color:"#555",icon:"🔒",srv:"dl",prot:true},
+  {domain:"aminthenungesser.com",name:"Aminthe Nungesser",tagline:"Mardi Gras pioneer",cat:"Protected",color:"#534AB7",icon:"🎭",srv:"dl",prot:true},
+  {domain:"brionwise.com",name:"Brion Wise",tagline:"Protected property",cat:"Protected",color:"#555",icon:"🔒",srv:"dl",prot:true},
+  {domain:"davefurano.com",name:"Dave Furano",tagline:"Music industry pioneer",cat:"Protected",color:"#444441",icon:"🎵",srv:"dl",prot:true},
+  {domain:"dellfurano.com",name:"Dell Furano",tagline:"Music industry legend",cat:"Protected",color:"#444441",icon:"🎵",srv:"ams",prot:true},
+  {domain:"gratefuldave.com",name:"Grateful Dave",tagline:"Living the grateful life",cat:"Protected",color:"#3B6D11",icon:"☮️",srv:"dl",prot:true},
+  {domain:"kellyfurano.com",name:"Kelly Furano",tagline:"Business development executive",cat:"Protected",color:"#534AB7",icon:"👔",srv:"ams",prot:true},
+  {domain:"musicslots.com",name:"Music Slots",tagline:"Protected property",cat:"Protected",color:"#993556",icon:"🎰",srv:"dl",prot:true},
+  {domain:"rocksportsplay.com",name:"Rock Sports Play",tagline:"Protected property",cat:"Protected",color:"#993C1D",icon:"🎸",srv:"dl",prot:true},
+  {domain:"rondawise.com",name:"Ronda Wise",tagline:"Protected property",cat:"Protected",color:"#555",icon:"🔒",srv:"dl",prot:true},
+  {domain:"sandybrew.com",name:"Sandy Brew",tagline:"Craft beer experience",cat:"Protected",color:"#6cba96",icon:"🍺",srv:"ams",prot:true},
+  {domain:"sandyfurano.com",name:"Sandy Furano",tagline:"Personal photo gallery",cat:"Protected",color:"#3B6D11",icon:"🌿",srv:"ams",prot:true},
+  {domain:"sharkstoothvineyards.com",name:"Sharkstooth Vineyards",tagline:"Fort Ross-Seaview coastal wine",cat:"Protected",color:"#5C1A33",icon:"🍷",srv:"dl",prot:true},
+  {domain:"winterlandposters.com",name:"Winterland Posters",tagline:"Classic rock poster art",cat:"Protected",color:"#26215C",icon:"🎨",srv:"dl",prot:true},
+];
+
+var cat="all",q="";
+
+function dk(h,a){var r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);return"rgb("+Math.round(r*a)+","+Math.round(g*a)+","+Math.round(b*a)+")";}
+
+function render(){
+  var f=D.filter(function(d){return(cat==="all"||d.cat===cat)&&(!q||[d.name,d.tagline,d.domain,d.cat].join(" ").toLowerCase().indexOf(q)>=0);});
+  document.getElementById("showing").textContent=f.length;
+  document.getElementById("nc").textContent=f.length+" domains";
+  var g=document.getElementById("grid");
+  if(!f.length){g.innerHTML='<div class="nores">No results found.</div>';return;}
+  var h="";
+  for(var i=0;i<f.length;i++){
+    var d=f[i];
+    var bg="linear-gradient(135deg,"+d.color+" 0%,"+dk(d.color,0.55)+" 100%)";
+    var srvLabel=d.srv==="ams"?"AMS":"DL";
+    var protBadge=d.prot?'<div class="plock">&#128274; Protected</div>':"";
+    h+='<a class="card" href="https://'+d.domain+'/" target="_blank" rel="noopener">'
+      +'<div class="thumb" style="background:'+bg+';">'
+      +'<div class="tshine"></div>'
+      +'<div class="ticon">'+d.icon+'</div>'
+      +'<div class="tbot"><div class="tname">'+d.name+'</div><div class="ttag">'+d.tagline+'</div></div>'
+      +'<div class="tbadge">'+d.cat+'</div>'
+      +protBadge
+      +'</div>'
+      +'<div class="cbody"><div class="cname">'+d.name+'</div>'
+      +'<div class="cmeta"><span class="cdom">'+d.domain+'</span>'
+      +'<span class="csrv csrv-'+(d.srv==="ams"?"ams":"dl")+'">'+srvLabel+'</span>'
+      +'</div></div>'
+      +'</a>';
+  }
+  g.innerHTML=h;
+}
+
+document.querySelectorAll(".cb").forEach(function(b){
+  b.addEventListener("click",function(){
+    document.querySelectorAll(".cb").forEach(function(x){x.classList.remove("on");});
+    b.classList.add("on");
+    cat=b.dataset.c;
+    render();
+  });
+});
+document.getElementById("search").addEventListener("input",function(e){q=e.target.value.toLowerCase();render();});
+render();
+</script>
+</body>
+</html>

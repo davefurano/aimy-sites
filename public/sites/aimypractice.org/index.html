@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AImyPractice.org — Dental Practice Flow Diagnostic</title>
+  <link rel="stylesheet" href="style.css" />
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aimypractice.org/">
+<meta property="og:title" content="AI My Practice">
+<meta property="og:description" content="Dental Practice Flow Diagnostic">
+<meta property="og:image" content="https://aimypractice.org/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI My Practice">
+<meta name="twitter:description" content="Dental Practice Flow Diagnostic">
+<meta name="twitter:image" content="https://aimypractice.org/og-image.jpg">
+</head>
+<body>
+  <header class="wrap">
+    <h1>Dental Practice Flow Diagnostic™</h1>
+    <p class="subhead">
+      Identify operational friction, missed production exposure, and modernization gaps —
+      <strong>no patient information required</strong>.
+    </p>
+    <a class="btn" href="#diagnostic">Start Free Diagnostic</a>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <h2>What this evaluates</h2>
+      <ul>
+        <li>Inbound handling (missed calls, after-hours gaps)</li>
+        <li>Scheduling friction (manual load, reminders, no-shows)</li>
+        <li>Administrative load (repetitive tasks, fragmentation)</li>
+        <li>Automation readiness (tools, tracking, budget alignment)</li>
+      </ul>
+      <p class="note">
+        This is an operational diagnostic — not a clinical assessment.
+      </p>
+    </section>
+
+    <section id="diagnostic" class="card">
+      <h2>Diagnostic (5 minutes)</h2>
+
+      <form id="assessmentForm">
+        <label>1) Average inbound calls per weekday?</label>
+        <select name="callsPerDay" required>
+          <option value="">Select…</option>
+          <option value="0-10">0–10</option>
+          <option value="11-30">11–30</option>
+          <option value="31-60">31–60</option>
+          <option value="60+">60+</option>
+        </select>
+
+        <label>2) Estimated missed calls per day?</label>
+        <select name="missedCalls" required>
+          <option value="">Select…</option>
+          <option value="0-1">0–1</option>
+          <option value="2-3">2–3</option>
+          <option value="4-5">4–5</option>
+          <option value="6+">6+</option>
+        </select>
+
+        <label>3) Average hold time during peak hours?</label>
+        <select name="holdTime" required>
+          <option value="">Select…</option>
+          <option value="0-1m">0–1 min</option>
+          <option value="1-3m">1–3 min</option>
+          <option value="3-5m">3–5 min</option>
+          <option value="5m+">5+ min</option>
+        </select>
+
+        <label>4) No-show rate?</label>
+        <select name="noShow" required>
+          <option value="">Select…</option>
+          <option value="0-5">0–5%</option>
+          <option value="6-10">6–10%</option>
+          <option value="11-15">11–15%</option>
+          <option value="16+">16%+</option>
+        </select>
+
+        <label>5) Automated reminders?</label>
+        <select name="reminders" required>
+          <option value="">Select…</option>
+          <option value="sms+email">Yes (SMS + Email)</option>
+          <option value="email">Yes (Email only)</option>
+          <option value="none">No</option>
+        </select>
+
+        <label>6) Staff hours/week spent on scheduling?</label>
+        <select name="schedHours" required>
+          <option value="">Select…</option>
+          <option value="0-5">0–5</option>
+          <option value="6-10">6–10</option>
+          <option value="11-15">11–15</option>
+          <option value="16+">16+</option>
+        </select>
+
+        <label>7) After-hours inquiry volume?</label>
+        <select name="afterHours" required>
+          <option value="">Select…</option>
+          <option value="none">None / negligible</option>
+          <option value="low">Low</option>
+          <option value="med">Medium</option>
+          <option value="high">High</option>
+        </select>
+
+        <label>8) Missed call capture system (text-back/voicemail routing)?</label>
+        <select name="missedCapture" required>
+          <option value="">Select…</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+
+        <label>9) Average production per visit (your estimate)?</label>
+        <select name="avgProd" required>
+          <option value="">Select…</option>
+          <option value="250">$250</option>
+          <option value="350">$350</option>
+          <option value="450">$450</option>
+          <option value="600">$600+</option>
+        </select>
+
+        <label>10) How far out is hygiene booked?</label>
+        <select name="hygieneBacklog" required>
+          <option value="">Select…</option>
+          <option value="0-2w">0–2 weeks</option>
+          <option value="3-6w">3–6 weeks</option>
+          <option value="7-10w">7–10 weeks</option>
+          <option value="10w+">10+ weeks</option>
+        </select>
+
+        <label>11) Recall reminders are…</label>
+        <select name="recall" required>
+          <option value="">Select…</option>
+          <option value="systematic">Systematic + tracked</option>
+          <option value="some">Somewhat consistent</option>
+          <option value="manual">Manual / inconsistent</option>
+        </select>
+
+        <label>12) Unscheduled treatment tracking?</label>
+        <select name="unscheduledTx" required>
+          <option value="">Select…</option>
+          <option value="tracked">Tracked + follow-up</option>
+          <option value="partial">Partial</option>
+          <option value="none">Not tracked</option>
+        </select>
+
+        <label>13) Number of systems used for admin tasks?</label>
+        <select name="systems" required>
+          <option value="">Select…</option>
+          <option value="1-2">1–2</option>
+          <option value="3-4">3–4</option>
+          <option value="5+">5+</option>
+        </select>
+
+        <label>14) Front desk staff count?</label>
+        <select name="frontDesk" required>
+          <option value="">Select…</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3+">3+</option>
+        </select>
+
+        <label>15) Budget range for operational improvements?</label>
+        <select name="budget" required>
+          <option value="">Select…</option>
+          <option value="under5">&lt; $5K</option>
+          <option value="5-10">$5K–$10K</option>
+          <option value="10-25">$10K–$25K</option>
+          <option value="25+">$25K+</option>
+        </select>
+
+        <div class="row">
+          <button class="btn" type="submit">Generate Report</button>
+          <button class="btn ghost" type="button" id="resetBtn">Reset</button>
+        </div>
+
+        <p class="fineprint">
+          No patient information is requested. This diagnostic is implementation-agnostic.
+        </p>
+      </form>
+    </section>
+
+    <section id="report" class="card hidden" aria-live="polite">
+      <h2>Your Practice Flow Report™</h2>
+
+      <div class="kpis">
+        <div class="kpi">
+          <div class="kpiLabel">Practice Flow Score™</div>
+          <div class="kpiValue" id="totalScore">—</div>
+          <div class="kpiSub" id="band">—</div>
+        </div>
+        <div class="kpi">
+          <div class="kpiLabel">Estimated Monthly Production Exposure</div>
+          <div class="kpiValue" id="exposure">—</div>
+          <div class="kpiSub">Directional estimate, not a guarantee</div>
+        </div>
+      </div>
+
+      <h3>Score Breakdown (fully visible)</h3>
+      <ul>
+        <li>Inbound Handling: <strong id="sInbound">—</strong> / 25</li>
+        <li>Scheduling Friction: <strong id="sSched">—</strong> / 25</li>
+        <li>Administrative Load: <strong id="sAdmin">—</strong> / 25</li>
+        <li>Automation Readiness: <strong id="sReady">—</strong> / 25</li>
+      </ul>
+
+      <h3>Primary friction areas</h3>
+      <ol id="frictions"></ol>
+
+      <h3>Modernization phases (neutral)</h3>
+      <ul>
+        <li><strong>Phase 1 — Immediate Relief:</strong> inquiry capture, scheduling intake, reminders, after-hours coverage</li>
+        <li><strong>Phase 2 — Operational Efficiency:</strong> intake workflow + integration + reporting</li>
+        <li><strong>Phase 3 — Strategic Optimization:</strong> recall + unscheduled treatment recovery + analytics</li>
+      </ul>
+
+      <div class="divider"></div>
+      <p class="note">
+        Implementation support is available through
+        <a href="https://aiintelligencefactory.com" target="_blank" rel="noopener">AIIntelligenceFactory.com</a>.
+      </p>
+    </section>
+
+    <footer class="wrap footer">
+      <p>
+        This diagnostic evaluates operational workflows only. No patient information is collected.
+        Implementation support is available through <a href="https://aiintelligencefactory.com" target="_blank" rel="noopener">AI Intelligence Factory</a>.
+      </p>
+    </footer>
+  </main>
+
+  <script src="assessment.js"></script>
+</body>
+</html>

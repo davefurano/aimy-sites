@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AImy Wallet — AI by the dollar, not by the month</title>
+  <meta name="description" content="Top up real dollars. Use AI agents that build your career. See exactly where every cent goes. No subscription. Balance never expires.">
+  <meta name="theme-color" content="#FAF7F2">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="AImy Wallet">
+  <meta property="og:description" content="AI by the dollar. Not by the month.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aimywallet.app">
+  <meta property="og:site_name" content="AImy">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AImy Wallet">
+  <meta name="twitter:description" content="AI by the dollar. Not by the month.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       AImy brand tokens — kept consistent with aimybio.com
+       ============================================================ */
+    :root {
+      --cream: #FAF7F2;
+      --cream2: #F3EDE3;
+      --ink: #1A1614;
+      --ink2: #3D3530;
+      --ink3: #7A6F68;
+      --gold: #C8922A;
+      --gold2: #E5B44F;
+      --sage: #4A7C6A;
+      --border: rgba(26, 22, 20, 0.10);
+      --shadow: 0 4px 32px rgba(26, 22, 20, 0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Subtle film-grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ============================================================
+       Nav
+       ============================================================ */
+    nav {
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .logo span {
+      color: var(--gold);
+      font-style: italic;
+    }
+    .nav-meta {
+      font-size: 0.78rem;
+      color: var(--ink3);
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .pulse {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--gold);
+      margin-right: 0.5rem;
+      animation: pulse 2s infinite;
+      vertical-align: middle;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+
+    /* ============================================================
+       Main
+       ============================================================ */
+    main {
+      flex: 1;
+      max-width: 1180px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 5rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 920px) {
+      main {
+        grid-template-columns: 1fr;
+        padding: 3rem 1.5rem;
+        gap: 3rem;
+      }
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5.5vw, 4.25rem);
+      font-weight: 700;
+      line-height: 1.02;
+      letter-spacing: -0.025em;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .lede {
+      font-size: 1.15rem;
+      color: var(--ink2);
+      margin-top: 1.75rem;
+      max-width: 36ch;
+    }
+    .lede strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    /* Notify form */
+    .form {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 0.5rem;
+      max-width: 440px;
+    }
+    .form input {
+      flex: 1;
+      padding: 0.9rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      background: white;
+      color: var(--ink);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .form input:focus {
+      outline: none;
+      border-color: var(--ink);
+      box-shadow: 0 0 0 3px rgba(26, 22, 20, 0.08);
+    }
+    .form button {
+      padding: 0.9rem 1.5rem;
+      background: var(--ink);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity 0.15s, transform 0.05s;
+      white-space: nowrap;
+    }
+    .form button:hover { opacity: 0.85; }
+    .form button:active { transform: translateY(1px); }
+    .form-note {
+      margin-top: 0.85rem;
+      font-size: 0.82rem;
+      color: var(--ink3);
+      max-width: 440px;
+    }
+    .form-success {
+      display: none;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: var(--sage);
+      font-weight: 500;
+    }
+    .form-success.shown { display: block; }
+
+    /* ============================================================
+       Wallet mockup card — the visual hook
+       ============================================================ */
+    .wallet-card {
+      background: white;
+      border-radius: 16px;
+      padding: 2.25rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    .wallet-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      border-radius: 16px 16px 0 0;
+    }
+
+    .wallet-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink3);
+    }
+    .wallet-balance {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      margin-top: 0.4rem;
+      letter-spacing: -0.025em;
+      line-height: 1;
+    }
+    .wallet-balance .cents {
+      color: var(--ink3);
+      font-weight: 400;
+    }
+
+    .wallet-summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.75rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink3);
+    }
+    .stat-value {
+      font-size: 1.05rem;
+      font-weight: 500;
+      margin-top: 0.3rem;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .txns {
+      margin-top: 1.75rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .txns-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 0.5rem;
+    }
+    .txn {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.65rem 0;
+      font-size: 0.92rem;
+      border-bottom: 1px dashed var(--border);
+    }
+    .txn:last-child { border-bottom: none; }
+    .txn-name {
+      color: var(--ink);
+      line-height: 1.3;
+    }
+    .txn-meta {
+      color: var(--ink3);
+      font-size: 0.74rem;
+      font-family: 'DM Mono', monospace;
+      margin-top: 0.15rem;
+      letter-spacing: 0.04em;
+    }
+    .txn-meta .agent-tag {
+      display: inline-block;
+      background: var(--cream2);
+      color: var(--sage);
+      padding: 0.05rem 0.4rem;
+      border-radius: 3px;
+      margin-left: 0.3rem;
+      font-size: 0.7rem;
+    }
+    .txn-amount {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      padding-left: 1rem;
+    }
+    .txn-amount.debit { color: var(--ink2); }
+    .txn-amount.credit { color: var(--sage); font-weight: 500; }
+
+    /* ============================================================
+       Footer
+       ============================================================ */
+    footer {
+      padding: 2rem 2.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.82rem;
+      color: var(--ink3);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    footer a {
+      color: var(--ink2);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    footer a:hover {
+      color: var(--ink);
+      text-decoration: underline;
+    }
+    footer .arrow { display: inline-block; transition: transform 0.15s; }
+    footer a:hover .arrow { transform: translateX(2px); }
+
+    /* ============================================================
+       Reduced motion
+       ============================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      .pulse { animation: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">AI<span>my</span>Wallet</div>
+    <div class="nav-meta"><span class="pulse"></span>Coming soon</div>
+  </nav>
+
+  <main>
+    <section>
+      <h1>AI <em>by the dollar.</em><br>Not by the month.</h1>
+
+      <p class="lede">
+        Top up real dollars. Use AI agents that find opportunities, write your resumes, build your bio, and prep your interviews. <strong>See exactly where every cent goes.</strong> No subscription you forget to cancel. Balance never expires.
+      </p>
+
+      <form class="form" id="notify-form" autocomplete="on">
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="your@email.com"
+          required
+          aria-label="Email address"
+        >
+        <button type="submit">Notify me</button>
+      </form>
+      <div class="form-note">
+        We'll email you once when AImy Wallet is open. No spam, no list trades.
+      </div>
+      <div class="form-success" id="form-success" role="status" aria-live="polite"></div>
+    </section>
+
+    <aside class="wallet-card" aria-label="Sample wallet view">
+      <div class="wallet-label">Your AImy Wallet</div>
+      <div class="wallet-balance">$23<span class="cents">.41</span></div>
+
+      <div class="wallet-summary">
+        <div>
+          <div class="stat-label">Today</div>
+          <div class="stat-value">$1.09</div>
+        </div>
+        <div>
+          <div class="stat-label">This week</div>
+          <div class="stat-value">$4.97</div>
+        </div>
+        <div>
+          <div class="stat-label">This month</div>
+          <div class="stat-value">$14.20</div>
+        </div>
+      </div>
+
+      <div class="txns">
+        <div class="txns-title">Recent activity</div>
+
+        <div class="txn">
+          <div>
+            <div class="txn-name">Tailored resume — Stripe (Sr PM)</div>
+            <div class="txn-meta">Today · 09:14</div>
+          </div>
+          <div class="txn-amount debit">−$0.99</div>
+        </div>
+
+        <div class="txn">
+          <div>
+            <div class="txn-name">Opportunity matched — Anthropic, Senior PM</div>
+            <div class="txn-meta">Today · 06:02 <span class="agent-tag">scout</span></div>
+          </div>
+          <div class="txn-amount debit">−$0.10</div>
+        </div>
+
+        <div class="txn">
+          <div>
+            <div class="txn-name">Bio session — 6 formats × 6 tones</div>
+            <div class="txn-meta">Yesterday · 18:42</div>
+          </div>
+          <div class="txn-amount debit">−$0.99</div>
+        </div>
+
+        <div class="txn">
+          <div>
+            <div class="txn-name">Coaching chat — should I take the offer?</div>
+            <div class="txn-meta">Yesterday · 11:08</div>
+          </div>
+          <div class="txn-amount debit">−$1.49</div>
+        </div>
+
+        <div class="txn">
+          <div>
+            <div class="txn-name">Top up</div>
+            <div class="txn-meta">Apr 22 · Visa ••3719</div>
+          </div>
+          <div class="txn-amount credit">+$25.00</div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <footer>
+    <div>© 2026 AImy. The career operating system.</div>
+    <div>
+      <a href="https://aicareerplanner.com">aicareerplanner.com <span class="arrow">→</span></a>
+    </div>
+  </footer>
+
+  <script>
+    /**
+     * Notify form handler.
+     *
+     * By default, the form falls back to opening the visitor's email client
+     * with a pre-filled message to FALLBACK_EMAIL — works on every device,
+     * zero backend required.
+     *
+     * To wire to a real form endpoint (Formspree, Tally, ConvertKit, your
+     * own API, etc.), set the ENDPOINT constant below to the POST URL.
+     * The handler will POST { email, source } as JSON and only fall back
+     * to mailto if the endpoint fails.
+     */
+    (function () {
+      // Replace with your form-handler URL when ready (e.g. Formspree).
+      var ENDPOINT = null;
+      // Inbox to receive notify requests if no endpoint is configured.
+      var FALLBACK_EMAIL = 'notify@aimywallet.app';
+
+      var form = document.getElementById('notify-form');
+      var successEl = document.getElementById('form-success');
+      var emailEl = document.getElementById('email');
+
+      function showSuccess(msg) {
+        successEl.textContent = msg;
+        successEl.classList.add('shown');
+        form.style.display = 'none';
+      }
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        var email = (emailEl.value || '').trim();
+        if (!email) return;
+
+        if (ENDPOINT) {
+          try {
+            var res = await fetch(ENDPOINT, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json'
+              },
+              body: JSON.stringify({ email: email, source: 'aimywallet.app' })
+            });
+            if (res.ok) {
+              showSuccess('Thanks — we’ll be in touch when AImy Wallet is open.');
+              return;
+            }
+          } catch (_err) {
+            // fall through to mailto fallback
+          }
+        }
+
+        var subject = encodeURIComponent('Notify me — AImy Wallet');
+        var body = encodeURIComponent(
+          'Please add ' + email + ' to the AImy Wallet notify list.\n\n' +
+          'Sent from aimywallet.app'
+        );
+        window.location.href =
+          'mailto:' + FALLBACK_EMAIL + '?subject=' + subject + '&body=' + body;
+
+        showSuccess('Thanks — opening your email client to confirm.');
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Avastar Bar — AI-Powered Bar Entertainment</title>
+<meta name="description" content="Avastar Bar brings AI-powered avatar entertainment to bars and venues.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--brand:#7B2D8B;--brand2:#4A1A6B;--gold:#F5A623;--dark:#0D0D0D;--card:#1A1A2E}
+html{scroll-behavior:smooth}
+body{font-family:"Inter",sans-serif;background:var(--dark);color:#fff;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(13,13,13,.95),transparent)}
+.logo{font-size:1.2rem;font-weight:900;letter-spacing:-.03em;color:#fff}
+.logo span{color:var(--gold)}
+.nav-cta{background:var(--brand);color:#fff;border:none;padding:.5rem 1.25rem;border-radius:25px;font-family:inherit;font-size:.82rem;font-weight:700;cursor:pointer;transition:opacity .15s}
+.nav-cta:hover{opacity:.88}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem 4rem;position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 0%,#3d0a4f 0%,#1a0a2e 40%,var(--dark) 100%)}
+.hero-glow{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(123,45,139,.4) 0%,transparent 70%);pointer-events:none}
+.hero-icon{font-size:5rem;margin-bottom:1.5rem;display:block;filter:drop-shadow(0 0 40px rgba(245,166,35,.6))}
+.hero h1{font-size:clamp(2.5rem,7vw,5rem);font-weight:900;letter-spacing:-.04em;line-height:1;margin-bottom:1rem;background:linear-gradient(135deg,#fff 0%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:clamp(1rem,2.5vw,1.35rem);color:rgba(255,255,255,.7);max-width:600px;margin:0 auto 2.5rem;line-height:1.6}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:none;padding:.85rem 2.25rem;border-radius:30px;font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 8px 32px rgba(123,45,139,.5)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(123,45,139,.7)}
+.btn-secondary{background:rgba(255,255,255,.08);color:#fff;border:1.5px solid rgba(255,255,255,.2);padding:.85rem 2.25rem;border-radius:30px;font-family:inherit;font-size:1rem;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-secondary:hover{background:rgba(255,255,255,.15)}
+.section{padding:5rem 2rem;max-width:1100px;margin:0 auto}
+.section-label{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.section-title{font-size:clamp(1.8rem,4vw,3rem);font-weight:900;letter-spacing:-.03em;margin-bottom:1rem}
+.section-sub{font-size:1rem;color:rgba(255,255,255,.6);max-width:560px;line-height:1.7;margin-bottom:3rem}
+.features{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
+.feat{background:var(--card);border-radius:16px;padding:2rem;border:1px solid rgba(255,255,255,.07);transition:border-color .2s}
+.feat:hover{border-color:rgba(123,45,139,.5)}
+.feat-icon{font-size:2.5rem;margin-bottom:1rem;display:block}
+.feat h3{font-size:1.1rem;font-weight:700;margin-bottom:.5rem}
+.feat p{font-size:.88rem;color:rgba(255,255,255,.55);line-height:1.65}
+.how{background:linear-gradient(135deg,rgba(123,45,139,.12),rgba(74,26,107,.08));border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);padding:5rem 2rem}
+.how-inner{max-width:1100px;margin:0 auto}
+.steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:2rem;margin-top:3rem}
+.step{text-align:center}
+.step-num{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--brand2));display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;margin:0 auto 1rem}
+.step h3{font-size:.95rem;font-weight:700;margin-bottom:.4rem}
+.step p{font-size:.82rem;color:rgba(255,255,255,.5);line-height:1.6}
+.signup-section{padding:5rem 2rem;text-align:center}
+.signup-inner{max-width:560px;margin:0 auto}
+.form-card{background:var(--card);border-radius:20px;padding:2.5rem;border:1px solid rgba(123,45,139,.3);box-shadow:0 0 60px rgba(123,45,139,.15)}
+.form-title{font-size:1.6rem;font-weight:900;letter-spacing:-.03em;margin-bottom:.5rem}
+.form-sub{font-size:.88rem;color:rgba(255,255,255,.5);margin-bottom:2rem;line-height:1.6}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:.85rem}
+.form-row.single{grid-template-columns:1fr}
+.field{display:flex;flex-direction:column;gap:.35rem;text-align:left}
+.field label{font-size:.75rem;font-weight:600;color:rgba(255,255,255,.5);letter-spacing:.04em;text-transform:uppercase}
+.field input,.field select{font-family:inherit;font-size:.9rem;padding:.7rem 1rem;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.1);border-radius:10px;color:#fff;outline:none;transition:border-color .15s}
+.field input:focus,.field select:focus{border-color:var(--brand)}
+.field input::placeholder{color:rgba(255,255,255,.25)}
+.field select option{background:#1a1a2e;color:#fff}
+.submit-btn{width:100%;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:none;padding:1rem;border-radius:12px;font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;margin-top:.5rem;transition:opacity .15s,transform .15s;box-shadow:0 8px 24px rgba(123,45,139,.4)}
+.submit-btn:hover{opacity:.9;transform:translateY(-1px)}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.form-msg{font-size:.85rem;margin-top:1rem;min-height:1.5rem;font-weight:500}
+.form-msg.success{color:#4ade80}
+.form-msg.error{color:#f87171}
+.divider{height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,.1),transparent);margin:0 2rem}
+footer{text-align:center;padding:2.5rem 2rem;font-size:.78rem;color:rgba(255,255,255,.3)}
+footer a{color:rgba(255,255,255,.4);text-decoration:none}
+footer a:hover{color:#fff}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:500;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .25s;backdrop-filter:blur(8px)}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:#16162a;border-radius:20px;padding:2.5rem;width:100%;max-width:420px;border:1px solid rgba(123,45,139,.4);position:relative}
+.modal-close{position:absolute;top:1rem;right:1rem;background:rgba(255,255,255,.08);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center}
+.modal-close:hover{background:rgba(255,255,255,.15)}
+.modal h2{font-size:1.5rem;font-weight:800;margin-bottom:.4rem;letter-spacing:-.03em}
+.modal-sub{font-size:.85rem;color:rgba(255,255,255,.5);margin-bottom:1.75rem}
+.google-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:.75rem;background:#fff;color:#111;border:none;padding:.85rem;border-radius:10px;font-family:inherit;font-size:.92rem;font-weight:600;cursor:pointer;margin-bottom:1rem;transition:opacity .15s}
+.google-btn:hover{opacity:.9}
+.or-div{display:flex;align-items:center;gap:.75rem;margin:.75rem 0;font-size:.75rem;color:rgba(255,255,255,.3)}
+.or-div::before,.or-div::after{content:"";flex:1;height:1px;background:rgba(255,255,255,.1)}
+.auth-field{margin-bottom:.75rem}
+.auth-field input{width:100%;font-family:inherit;font-size:.9rem;padding:.7rem 1rem;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.1);border-radius:10px;color:#fff;outline:none}
+.auth-field input:focus{border-color:var(--brand)}
+.auth-field input::placeholder{color:rgba(255,255,255,.25)}
+.auth-submit{width:100%;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:none;padding:.85rem;border-radius:10px;font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:.25rem}
+.auth-toggle{font-size:.8rem;color:rgba(255,255,255,.4);text-align:center;margin-top:1rem}
+.auth-toggle a{color:var(--gold);text-decoration:none;cursor:pointer}
+.auth-msg{font-size:.82rem;text-align:center;margin-top:.75rem;min-height:1.2rem}
+@media(max-width:600px){.form-row{grid-template-columns:1fr}nav{padding:.85rem 1.25rem}}
+</style>
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://avastarbar.com/">
+<meta property="og:title" content="Avastar Bar">
+<meta property="og:description" content="AI-powered bar entertainment">
+<meta property="og:image" content="https://avastarbar.com/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Avastar Bar">
+<meta name="twitter:description" content="AI-powered bar entertainment">
+<meta name="twitter:image" content="https://avastarbar.com/og-image.jpg">
+</head>
+<body>
+<nav>
+  <div class="logo">Avastar<span>Bar</span></div>
+  <button class="nav-cta" onclick="document.getElementById('signup').scrollIntoView({behavior:'smooth'})">Get Early Access</button>
+</nav>
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div>
+    <span class="hero-icon">🍸</span>
+    <h1>The Bar Experience<br>Just Got Smarter</h1>
+    <p class="hero-sub">Avastar Bar brings AI-powered avatar entertainment to your venue — live performances, interactive experiences, and unforgettable nights.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('signup').scrollIntoView({behavior:'smooth'})">Book Your Venue</button>
+      <a class="btn-secondary" href="/login.html" style="text-decoration:none">Sign In</a>
+    </div>
+  </div>
+</div>
+<div class="section">
+  <div class="section-label">What We Do</div>
+  <h2 class="section-title">AI Entertainment Built for Bars</h2>
+  <p class="section-sub">From avatar DJs to interactive digital performers — Avastar Bar delivers experiences your guests will talk about for weeks.</p>
+  <div class="features">
+    <div class="feat"><span class="feat-icon">🎭</span><h3>Live Avatar Performers</h3><p>Real-time AI-driven avatars perform, interact with guests, and respond to the crowd — all without the rider.</p></div>
+    <div class="feat"><span class="feat-icon">🎵</span><h3>AI Music Curation</h3><p>Adaptive soundscapes that read the room and adjust the vibe in real time.</p></div>
+    <div class="feat"><span class="feat-icon">📱</span><h3>Guest Interaction</h3><p>Guests control the show via their phones — request songs, interact with performers, shape the experience.</p></div>
+    <div class="feat"><span class="feat-icon">📊</span><h3>Venue Analytics</h3><p>Real-time insights on crowd engagement, peak hours, and repeat visitors.</p></div>
+    <div class="feat"><span class="feat-icon">🔧</span><h3>Easy Setup</h3><p>Plug-and-play hardware installation. We handle the tech, you handle the pour.</p></div>
+    <div class="feat"><span class="feat-icon">💰</span><h3>Revenue Share</h3><p>Partner venues earn a share of digital experience revenue — new income stream, zero extra work.</p></div>
+  </div>
+</div>
+<div class="divider"></div>
+<div class="how">
+  <div class="how-inner">
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title">Up and Running in Days</h2>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><h3>Apply &amp; Book</h3><p>Fill out the form below. We'll reach out within 24 hours.</p></div>
+      <div class="step"><div class="step-num">2</div><h3>Installation</h3><p>Our team installs the Avastar system in typically one day.</p></div>
+      <div class="step"><div class="step-num">3</div><h3>Go Live</h3><p>Launch night with full Avastar support on-site. First experience is on us.</p></div>
+      <div class="step"><div class="step-num">4</div><h3>Grow</h3><p>Review analytics, customize your lineup, watch repeat traffic climb.</p></div>
+    </div>
+  </div>
+</div>
+<div class="signup-section" id="signup">
+  <div class="signup-inner">
+    <div class="section-label" style="text-align:center">Get Started</div>
+    <div class="form-card">
+      <h2 class="form-title">Bring Avastar to Your Venue</h2>
+      <p class="form-sub">Tell us about your bar. We'll reach out with a custom proposal within 24 hours.</p>
+      <form id="signup-form" onsubmit="submitForm(event)">
+        <div class="form-row">
+          <div class="field"><label>Your Name</label><input type="text" id="f-name" placeholder="Dave Furano" required></div>
+          <div class="field"><label>Email</label><input type="email" id="f-email" placeholder="dave@venue.com" required></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label>Venue Name</label><input type="text" id="f-venue" placeholder="The Rusty Rail"></div>
+          <div class="field"><label>City</label><input type="text" id="f-city" placeholder="New Orleans"></div>
+        </div>
+        <div class="form-row single">
+          <div class="field"><label>I'm Interested In</label>
+            <select id="f-interest">
+              <option value="">Select one...</option>
+              <option value="live-performance">Live Avatar Performances</option>
+              <option value="dj">AI DJ / Music Curation</option>
+              <option value="full">Full Avastar Bar Experience</option>
+              <option value="demo">Just want a demo first</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="submit-btn" id="submit-btn">Request My Proposal &#8594;</button>
+        <div class="form-msg" id="form-msg"></div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+<footer><p>&copy; 2026 Avastar Bar &nbsp;|&nbsp; An <a href="https://aimyservice.com">AIM Your Service</a> property</p></footer>
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAuth()">&#10005;</button>
+    <h2 id="modal-title">Welcome Back</h2>
+    <p class="modal-sub" id="modal-sub">Sign in to your Avastar Bar account</p>
+    <button class="google-btn" onclick="googleAuth()">
+      <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.706A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.706V4.962H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.038l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.962L3.964 6.294C4.672 4.169 6.656 3.58 9 3.58z"/></svg>
+      Continue with Google
+    </button>
+    <div class="or-div">or</div>
+    <div class="auth-field"><input type="email" id="auth-email" placeholder="Email address"></div>
+    <div class="auth-field"><input type="password" id="auth-password" placeholder="Password"></div>
+    <button class="auth-submit" onclick="emailAuth()" id="auth-submit-btn">Sign In</button>
+    <div class="auth-toggle">Don't have an account? <a onclick="toggleAuthMode()">Sign up</a></div>
+    <div class="auth-msg" id="auth-msg"></div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+var SB=supabase.createClient("https://yourhspxqggfhbsjpsnq.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlvdXJoc3B4cWdnZmhic2pwc25xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3MjMxMTksImV4cCI6MjA3MzI5OTExOX0.2YPm1xP8RhfShzItK1RXxa1_Gcmw56jqt3NskoPVr3k");
+var authMode="signin";
+async function submitForm(e){
+  e.preventDefault();
+  var btn=document.getElementById("submit-btn");
+  var name=document.getElementById("f-name").value.trim();
+  var email=document.getElementById("f-email").value.trim();
+  var venue=document.getElementById("f-venue").value.trim();
+  var city=document.getElementById("f-city").value.trim();
+  var interest=document.getElementById("f-interest").value;
+  if(!name||!email){showMsg("form-msg","Name and email are required.","error");return;}
+  btn.disabled=true;btn.textContent="Sending...";
+  var r=await SB.from("avastarbar_signups").insert({name:name,email:email,venue_name:venue||null,city:city||null,interest:interest||null});
+  if(r.error){showMsg("form-msg","Something went wrong. Please try again.","error");btn.disabled=false;btn.textContent="Request My Proposal \u2192";}
+  else{showMsg("form-msg","\uD83C\uDF89 Got it! We'll be in touch within 24 hours.","success");btn.textContent="Submitted!";document.getElementById("signup-form").reset();}
+}
+function openAuth(){document.getElementById("modal").classList.add("open");}
+function closeAuth(){document.getElementById("modal").classList.remove("open");document.getElementById("auth-msg").textContent="";}
+document.getElementById("modal").addEventListener("click",function(e){if(e.target===this)closeAuth();});
+function toggleAuthMode(){
+  authMode=authMode==="signin"?"signup":"signin";
+  document.getElementById("modal-title").textContent=authMode==="signin"?"Welcome Back":"Create Account";
+  document.getElementById("modal-sub").textContent=authMode==="signin"?"Sign in to your Avastar Bar account":"Join Avastar Bar today";
+  document.querySelector(".auth-toggle").innerHTML=authMode==="signin"?"Don't have an account? <a onclick=\"toggleAuthMode()\">Sign up</a>":"Already have an account? <a onclick=\"toggleAuthMode()\">Sign in</a>";
+  document.getElementById("auth-submit-btn").textContent=authMode==="signin"?"Sign In":"Create Account";
+  document.getElementById("auth-msg").textContent="";
+}
+async function googleAuth(){
+  var r=await SB.auth.signInWithOAuth({provider:"google",options:{redirectTo:window.location.href}});
+  if(r.error)showMsg("auth-msg",r.error.message,"error");
+}
+async function emailAuth(){
+  var email=document.getElementById("auth-email").value.trim();
+  var password=document.getElementById("auth-password").value;
+  if(!email||!password){showMsg("auth-msg","Email and password required.","error");return;}
+  var r=authMode==="signin"?await SB.auth.signInWit

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sign in — Furano's</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#0F6E56;--brand-muted:#0F6E5618}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Inter',sans-serif;background:#f5f7fa;color:#0d1117;display:flex;min-height:100vh}
+.left{width:380px;flex-shrink:0;background:var(--brand);display:flex;flex-direction:column;justify-content:space-between;padding:2.5rem;position:relative;overflow:hidden}
+.left::before{content:'';position:absolute;top:-80px;right:-80px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.05)}
+.left::after{content:'';position:absolute;bottom:-60px;left:-60px;width:250px;height:250px;border-radius:50%;background:rgba(255,255,255,.04)}
+.left-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:#fff;position:relative;z-index:1}
+.left-copy{position:relative;z-index:1}
+.left-copy h2{font-family:'Syne',sans-serif;font-size:1.75rem;font-weight:800;color:#fff;line-height:1.2;margin-bottom:.75rem}
+.left-copy p{font-size:.875rem;color:rgba(255,255,255,.65);line-height:1.75}
+.left-tiers{position:relative;z-index:1}
+.tier-row{display:flex;align-items:center;gap:.65rem;margin-bottom:.5rem}
+.tier-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35);flex-shrink:0}
+.tier-dot.on{background:#fff}
+.tier-label{font-size:.78rem;color:rgba(255,255,255,.7)}
+.tier-label strong{color:#fff;font-weight:600}
+.right{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem}
+.card{background:#fff;border-radius:16px;border:1px solid #e8ecf0;padding:2.25rem;width:100%;max-width:400px}
+.tabs{display:flex;border-bottom:1px solid #e8ecf0;margin-bottom:1.75rem}
+.tab{flex:1;text-align:center;padding:.7rem;font-size:.85rem;font-weight:500;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;background:none;border-top:none;border-left:none;border-right:none}
+.tab.active{color:var(--brand);border-bottom-color:var(--brand)}
+.auth-title{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:#0d1117;margin-bottom:.3rem}
+.auth-sub{font-size:.85rem;color:#6b7280;margin-bottom:1.5rem}
+.form-group{margin-bottom:1rem}
+label{display:block;font-size:.78rem;font-weight:500;color:#374151;margin-bottom:.35rem}
+input[type=email],input[type=password],input[type=text]{width:100%;padding:.7rem .9rem;border:1px solid #e5e7eb;border-radius:8px;font-size:.875rem;font-family:'Inter',sans-serif;color:#0d1117;background:#fafafa;outline:none;transition:border-color .15s,box-shadow .15s}
+input:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-muted);background:#fff}
+.btn{width:100%;padding:.8rem;background:var(--brand);color:#fff;border:none;border-radius:8px;font-size:.9rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:opacity .15s;margin-top:.4rem}
+.btn:hover{opacity:.88}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-google{width:100%;padding:.7rem;border:1px solid #e5e7eb;border-radius:8px;font-size:.85rem;font-weight:500;font-family:'Inter',sans-serif;color:#374151;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem;transition:border-color .15s;margin-bottom:.85rem}
+.btn-google:hover{border-color:#9ca3af}
+.divider{display:flex;align-items:center;gap:.65rem;margin:.85rem 0;color:#9ca3af;font-size:.75rem}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:#e5e7eb}
+.tier-sel{margin-bottom:1.1rem}
+.tier-sel-label{font-size:.78rem;font-weight:500;color:#374151;margin-bottom:.4rem;display:block}
+.tier-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem}
+.tier-opt{border:1.5px solid #e5e7eb;border-radius:8px;padding:.6rem .4rem;text-align:center;cursor:pointer;transition:all .15s}
+.tier-opt:hover{border-color:var(--brand)}
+.tier-opt.sel{border-color:var(--brand);background:var(--brand-muted)}
+.tier-opt-name{font-size:.75rem;font-weight:700;color:#374151;display:block}
+.tier-opt.sel .tier-opt-name{color:var(--brand)}
+.tier-opt-price{font-size:.65rem;color:#9ca3af;margin-top:.1rem}
+.err{background:#fef2f2;border:1px solid #fecaca;color:#dc2626;font-size:.78rem;padding:.6rem .8rem;border-radius:6px;margin-bottom:.85rem;display:none}
+.ok{background:#f0fdf4;border:1px solid #bbf7d0;color:#16a34a;font-size:.78rem;padding:.6rem .8rem;border-radius:6px;margin-bottom:.85rem;display:none}
+.forgot{text-align:right;margin-top:.3rem}
+.forgot a{font-size:.75rem;color:var(--brand);text-decoration:none}
+.terms{font-size:.7rem;color:#9ca3af;text-align:center;margin-top:.85rem;line-height:1.5}
+.terms a{color:var(--brand);text-decoration:none}
+@media(max-width:768px){.left{display:none}}
+</style></head><body>
+<div class="left">
+  <div class="left-logo">Furano's</div>
+  <div class="left-copy">
+    <h2>The Furano family home</h2>
+    <p>Sign in to access your dashboard, manage your subscription, and use AI-powered tools.</p>
+  </div>
+  <div class="left-tiers">
+    <div class="tier-row"><div class="tier-dot on"></div><div class="tier-label"><strong>Free</strong> — Full access, 10 AI queries/day</div></div>
+    <div class="tier-row"><div class="tier-dot"></div><div class="tier-label"><strong>Pro</strong> — $9/mo · 500 queries/day</div></div>
+    <div class="tier-row"><div class="tier-dot"></div><div class="tier-label"><strong>Business</strong> — $29/mo · Unlimited</div></div>
+  </div>
+</div>
+<div class="right">
+  <div class="card">
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('login')">Sign in</button>
+      <button class="tab" onclick="showTab('signup')">Create account</button>
+    </div>
+    <div id="err" class="err"></div>
+    <div id="ok" class="ok"></div>
+
+    <div id="loginForm">
+      <div class="auth-title">Welcome back</div>
+      <div class="auth-sub">Sign in to Furano's</div>
+      <button class="btn-google" onclick="googleAuth()">
+        <svg width="15" height="15" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Continue with Google
+      </button>
+      <div class="divider">or</div>
+      <div class="form-group"><label>Email</label><input type="email" id="le" placeholder="you@example.com" autocomplete="email"></div>
+      <div class="form-group"><label>Password</label><input type="password" id="lp" placeholder="••••••••" autocomplete="current-password"><div class="forgot"><a href="#" onclick="showForgot()">Forgot password?</a></div></div>
+      <button class="btn" onclick="doLogin()" id="lbtn">Sign in</button>
+      <div class="terms">By signing in you agree to our <a href="/terms.html">Terms</a> and <a href="/privacy.html">Privacy Policy</a>.</div>
+    </div>
+
+    <div id="signupForm" style="display:none">
+      <div class="auth-title">Create account</div>
+      <div class="auth-sub">Free forever. Upgrade anytime.</div>
+      <button class="btn-google" onclick="googleAuth()">
+        <svg width="15" height="15" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Sign up with Google
+      </button>
+      <div class="divider">or</div>
+      <div class="form-group"><label>Full name</label><input type="text" id="sn" placeholder="Your name" autocomplete="name"></div>
+      <div class="form-group"><label>Email</label><input type="email" id="se" placeholder="you@example.com" autocomplete="email"></div>
+      <div class="form-group"><label>Password</label><input type="password" id="sp" placeholder="At least 8 characters" autocomplete="new-password"></div>
+      <div class="tier-sel">
+        <span class="tier-sel-label">Choose your plan</span>
+        <div class="tier-opts">
+          <div class="tier-opt sel" onclick="selTier('free',this)"><span class="tier-opt-name">Free</span><div class="tier-opt-price">$0/mo</div></div>
+          <div class="tier-opt" onclick="selTier('pro',this)"><span class="tier-opt-name">Pro</span><div class="tier-opt-price">$9/mo</div></div>
+          <div class="tier-opt" onclick="selTier('business',this)"><span class="tier-opt-name">Business</span><div class="tier-opt-price">$29/mo</div></div>
+        </div>
+      </div>
+      <button class="btn" onclick="doSignup()" id="sbtn">Create free account</button>
+      <div class="terms">By signing up you agree to our <a href="/terms.html">Terms</a> and <a href="/privacy.html">Privacy Policy</a>.</div>
+    </div>
+
+    <div id="forgotForm" style="display:none">
+      <div class="auth-title">Reset password</div>
+      <div class="auth-sub">We'll email you a reset link.</div>
+      <div class="form-group"><label>Email</label><input type="email" id="fe" placeholder="you@example.com"></div>
+      <button class="btn" onclick="doForgot()" id="fbtn">Send reset link</button>
+      <div style="text-align:center;margin-top:1rem"><a href="#" onclick="showTab('login')" style="font-size:.78rem;color:var(--brand);text-decoration:none">← Back to sign in</a></div>
+    </div>
+  </div>
+</div>
+<script>
+const{createClient}=supabase;
+const sb=createClient('https://yourhspxqggfhbsjpsnq.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlvdXJoc3B4cWdnZmhic2pwc25xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3MjMxMTksImV4cCI6MjA3MzI5OTExOX0.2YPm1xP8RhfShzItK1RXxa1_Gcmw56jqt3NskoPVr3k');
+let tier='free';
+sb.auth.getSession().then(({data:{session}})=>{if(session)location.href='/dashboard.html'});
+function showTab(t){
+  ['login','signup','forgot'].forEach(x=>{document.getElementById(x+'Form').style.display='none'});
+  document.getElementById(t+'Form').style.display='block';
+  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',(t==='login'&&i===0)||(t==='signup'&&i===1)));
+  clr();
+}
+function showForgot(){document.getElementById('loginForm').style.display='none';document.getElementById('forgotForm').style.display='block';clr();}
+function selTier(t,el){tier=t;document.querySelectorAll('.tier-opt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');document.getElementById('sbtn').textContent=t==='free'?'Create free account':'Continue with '+t.charAt(0).toUpperCase()+t.slice(1);}
+function err(m){const e=document.getElementById('err');e.textContent=m;e.style.display='block';document.getElementById('ok').style.display='none';}
+function ok(m){const e=document.getElementById('ok');e.textContent=m;e.style.display='block';document.getElementById('err').style.display='none';}
+function clr(){document.getElementById('err').style.display='none';document.getElementById('ok').style.display='none';}
+async function doLogin(){
+  const e=document.getElementById('le').value.trim(),p=document.getElementById('lp').value;
+  if(!e||!p)return err('Please enter your email and password.');
+  const btn=document.getElementById('lbtn');btn.disabled=true;btn.textContent='Signing in...';
+  const{error}=await sb.auth.signInWithPassword({email:e,password:p});
+  if(error){err(error.message);btn.disabled=false;btn.textContent='Sign in';return;}
+  location.href='/dashboard.html';
+}
+async function doSignup(){
+  const n=document.getElementById('sn').value.trim(),e=document.getElementById('se').value.trim(),p=document.getElementById('sp').value;
+  if(!n||!e||!p)return err('Please fill in all fields.');
+  if(p.length<8)return err('Password must be at least 8 characters.');
+  const btn=document.getElementById('sbtn');btn.disabled=true;btn.textContent='Creating...';
+  const{error}=await sb.auth.signUp({email:e,password:p,options:{data:{full_name:n,domain:'furanos.com',tier}}});
+  if(error){err(error.message);btn.disabled=false;btn.textContent='Create free account';return;}
+  ok('Account created! Check your email to confirm, then sign in.');btn.disabled=false;
+}
+async function doForgot(){
+  const e=document.getElementById('fe').value.trim();
+  if(!e)return err('Please enter your email.');
+  const btn=document.getElementById('fbtn');btn.disabled=true;btn.textContent='Sending...';
+  const{error}=await sb.auth.resetPasswordForEmail(e,{redirectTo:window.location.origin+'/reset.html'});
+  if(error){err(error.message);btn.disabled=false;btn.textContent='Send reset link';return;}
+  ok('Reset link sent! Check your email.');btn.disabled=false;btn.textContent='Send reset link';
+}
+async function googleAuth(){
+  const{error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:window.location.origin+'/dashboard.html'}});
+  if(error)err(error.message);
+}
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Enter')return;
+  if(document.getElementById('loginForm').style.display!=='none')doLogin();
+  else if(document.getElementById('signupForm').style.display!=='none')doSignup();
+  else if(document.getElementById('forgotForm').style.display!=='none')doForgot();
+});
+</script>
+</body></html>
