@@ -1,0 +1,98 @@
+---
+// Dynamic directory page: renders the list of domains assigned to a given
+// "host" (aimyservice.com or downloadlounge.com) at build time, pulling from
+// public.domains in Supabase.
+
+import { getDomainsForServer, getAllDomains } from '../../../data/domains';
+
+export async function getStaticPaths() {
+  return [
+    { params: { host: 'aimyservice.com' } },
+    { params: { host: 'downloadlounge.com' } },
+  ];
+}
+
+const { host } = Astro.params;
+const entries = await getDomainsForServer(host as string);
+
+const TITLE = host === 'aimyservice.com' ? 'AI My Service'      : 'Download Lounge';
+const TAGLINE = host === 'aimyservice.com'
+  ? 'A growing collection of AI-powered tools and experiments.'
+  : 'A collection of downloadable resources and experiments.';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{TITLE}</title>
+  <meta name="description" content={TAGLINE} />
+  <style>
+    :root {
+      --bg: #FAF8F4;
+      --ink: #1A1614;
+      --muted: #666;
+      --rule: #E8E2D5;
+      --accent: #1A6B3D;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      line-height: 1.5;
+    }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 3rem 1.5rem; }
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      letter-spacing: -0.02em;
+      margin: 0 0 0.25rem;
+    }
+    .tagline { color: var(--muted); margin: 0 0 2.5rem; font-size: 1.125rem; }
+    .grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+    .card {
+      display: block;
+      padding: 1.25rem;
+      background: white;
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
+    .icon { font-size: 64px; line-height: 1; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; }
+    .name { font-weight: 600; margin: 0.5rem 0 0.25rem; }
+    .tag { color: var(--muted); font-size: 0.875rem; margin: 0; }
+    footer { margin-top: 3rem; color: var(--muted); font-size: 0.875rem; }
+    footer a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>{TITLE}</h1>
+    <p class="tagline">{TAGLINE}</p>
+
+    <div class="grid">
+      {entries.map((d) => (
+        <a class="card" href={`https://${d.domain}/`} style={d.color ? `border-color:${d.color}` : ''}>
+          <div class="icon" aria-hidden="true">{d.icon || '✨'}</div>
+          <p class="name">{d.name}</p>
+          <p class="tag">{d.tagline || d.domain}</p>
+        </a>
+      ))}
+    </div>
+
+    <footer>
+      {entries.length} sites · last built {new Date().toUTCString()}
+    </footer>
+  </div>
+</body>
+</html>

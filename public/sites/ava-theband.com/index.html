@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AVA — The Band — AI house band. Real performance. Every night.</title>
+<meta name="description" content="AVA is the AI-driven house band powering nightly entertainment at venues, resorts, and casino concert bars across the country.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ava-theband.com/">
+<meta property="og:title" content="AVA — The Band — AI house band. Real performance. Every night.">
+<meta property="og:description" content="AVA is the AI-driven house band powering nightly entertainment at venues, resorts, and casino concert bars across the country.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --brand: #4338CA;
+  --brand-light: #4338CA18;
+  --brand-mid: #4338CA44;
+  --text: #111;
+  --muted: #666;
+  --border: #e5e5e5;
+  --bg: #fafaf9;
+  --white: #fff;
+  --radius: 10px;
+  --max: 960px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; font-size: 16px; }
+a { color: var(--brand); text-decoration: none; }
+a:hover { opacity: .8; }
+nav { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2rem; border-bottom: 1px solid var(--border); background: var(--white); position: sticky; top: 0; z-index: 100; }
+.nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: var(--text); display: flex; align-items: center; gap: .5rem; }
+.nav-logo .icon { font-size: 1.4rem; }
+.nav-cta { background: var(--brand); color: var(--white) !important; padding: .55rem 1.25rem; border-radius: var(--radius); font-size: .875rem; font-weight: 500; }
+.nav-cta:hover { opacity: .88; }
+.hero { max-width: var(--max); margin: 0 auto; padding: 6rem 2rem 5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+@media (max-width: 700px) { .hero { grid-template-columns: 1fr; padding: 3.5rem 1.5rem 3rem; gap: 2.5rem; } }
+.hero-eyebrow { display: inline-block; background: var(--brand-light); color: var(--brand); padding: .35rem .85rem; border-radius: 999px; font-size: .8rem; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 1.25rem; }
+.hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text); }
+.hero-desc { font-size: 1.1rem; color: var(--muted); margin-bottom: 1.75rem; max-width: 38ch; }
+.hero-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+.btn-primary { background: var(--brand); color: var(--white) !important; padding: .85rem 1.5rem; border-radius: var(--radius); font-weight: 500; }
+.btn-ghost { color: var(--text) !important; padding: .85rem 1.5rem; border-radius: var(--radius); font-weight: 500; border: 1px solid var(--border); }
+.btn-ghost:hover { border-color: var(--brand); color: var(--brand) !important; opacity: 1; }
+.hero-visual { position: relative; aspect-ratio: 1; max-width: 360px; margin: 0 auto; border-radius: 16px; background: linear-gradient(135deg, var(--brand-light), var(--brand-mid)); border: 1px solid var(--brand-mid); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; }
+.hero-badge { position: absolute; top: 1rem; right: 1rem; background: var(--white); color: var(--brand); padding: .3rem .75rem; border-radius: 999px; font-size: .75rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.hero-icon { font-size: 4.5rem; margin-bottom: 1rem; }
+.hero-visual-title { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--text); }
+.hero-visual-sub { font-size: .85rem; color: var(--muted); margin-top: .25rem; }
+.divider { border: none; border-top: 1px solid var(--border); max-width: var(--max); margin: 0 auto; }
+.section { max-width: var(--max); margin: 0 auto; padding: 5rem 2rem; }
+.section-label { font-size: .8rem; font-weight: 500; color: var(--brand); letter-spacing: .08em; text-transform: uppercase; margin-bottom: .75rem; }
+.section-title { font-family: 'DM Serif Display', serif; font-size: 2.1rem; line-height: 1.2; margin-bottom: 1rem; }
+.section-desc { font-size: 1.05rem; color: var(--muted); max-width: 60ch; margin-bottom: 2.5rem; }
+.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+.feature-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; transition: border-color .15s, transform .15s; }
+.feature-card:hover { border-color: var(--brand); transform: translateY(-2px); }
+.feature-icon { font-size: 1.6rem; margin-bottom: .75rem; display: block; }
+.feature-title { font-weight: 500; margin-bottom: .35rem; color: var(--text); }
+.feature-desc { font-size: .92rem; color: var(--muted); line-height: 1.55; }
+.cta-band { background: var(--brand); color: var(--white); padding: 4.5rem 2rem; text-align: center; }
+.cta-band h2 { font-family: 'DM Serif Display', serif; font-size: 2rem; margin-bottom: .75rem; }
+.cta-band p { font-size: 1.05rem; opacity: .92; margin-bottom: 1.75rem; }
+.email-form { display: flex; gap: .5rem; max-width: 420px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+.email-form input { flex: 1 1 220px; padding: .85rem 1rem; border-radius: var(--radius); border: none; font-size: .95rem; font-family: inherit; }
+.email-form button { padding: .85rem 1.5rem; border-radius: var(--radius); border: none; background: var(--white); color: var(--brand); font-weight: 500; font-size: .95rem; cursor: pointer; font-family: inherit; }
+.email-form button:hover { opacity: .92; }
+.tribute { max-width: 720px; margin: 0 auto; padding: 5rem 2rem; }
+.tribute-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 3rem 2rem; text-align: center; }
+.tribute-icon { font-size: 3rem; margin-bottom: 1.25rem; }
+.tribute-quote { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 1.6rem; line-height: 1.35; margin-bottom: .75rem; color: var(--text); }
+.tribute-attr { color: var(--muted); margin-bottom: 1.75rem; font-size: .95rem; }
+.tribute-body { color: var(--muted); font-size: 1.02rem; line-height: 1.7; max-width: 50ch; margin: 0 auto 1.75rem; }
+.tribute-link { display: inline-block; background: var(--brand); color: var(--white) !important; padding: .85rem 1.75rem; border-radius: var(--radius); font-weight: 500; }
+footer { max-width: var(--max); margin: 0 auto; padding: 2.5rem 2rem; border-top: 1px solid var(--border); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; font-size: .9rem; color: var(--muted); }
+.footer-brand { display: flex; align-items: center; gap: .5rem; font-family: 'DM Serif Display', serif; color: var(--text); }
+.footer-link { color: var(--brand); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <span class="icon">🎤</span>
+    AVA — The Band
+  </div>
+  <a href="#contact" class="nav-cta">Get in touch</a>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Live</div>
+    <h1>AI house band. Real performance. Every night.</h1>
+    <p class="hero-desc">AVA is the AI-driven house band powering nightly entertainment at venues, resorts, and casino concert bars across the country.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Get in touch</a>
+      <a href="#about" class="btn-ghost">Learn more</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-badge">Live</div>
+    <div class="hero-icon">🎤</div>
+    <div class="hero-visual-title">AVA — The Band</div>
+    <div class="hero-visual-sub">ava-theband.com</div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section class="section" id="about">
+  <div class="section-label">What it does</div>
+  <h2 class="section-title">Built for the work</h2>
+  <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">🎶</span>
+        <div class="feature-title">Always on</div>
+        <div class="feature-desc">No travel days, no canceled nights, no rotation gaps.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🎨</span>
+        <div class="feature-title">Venue-tuned look</div>
+        <div class="feature-desc">Avatars dressed for your room, your brand, your demo.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🎛️</span>
+        <div class="feature-title">Programmable sets</div>
+        <div class="feature-desc">Energy curve from cocktail hour to peak. You set the arc.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📞</span>
+        <div class="feature-title">White-glove ops</div>
+        <div class="feature-desc">Tech, programming, and updates handled by Avatar House Bands.</div>
+      </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+
+<div class="cta-band" id="contact">
+  <h2>Ready to talk?</h2>
+  <p>Drop your email and we'll get back to you the same day.</p>
+  <form class="email-form" action="https://formspree.io/f/placeholder" method="POST" onsubmit="return false">
+    <input type="email" name="email" placeholder="your@email.com" required>
+    <button type="submit">Get in touch</button>
+  </form>
+</div>
+
+
+
+<footer>
+  <div class="footer-brand"><span>🎤</span> AVA — The Band</div>
+  <div class="footer-copy">&copy; 2026 ava-theband.com — All rights reserved</div>
+  <a href="https://aimyservice.com" class="footer-link">Part of the AImy Service network</a>
+</footer>
+</body>
+</html>

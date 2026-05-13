@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Talk to Me in Heaven — Keep the Conversation Going</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0d14;--text:#e8e4f0;--brand:#9b7fe8;--accent:#c4a8ff;--muted:#8888aa;--surface:#13131f}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;min-height:100vh}
+.stars{position:fixed;inset:0;background-image:radial-gradient(1px 1px at 20% 30%,rgba(255,255,255,.6) 0%,transparent 100%),radial-gradient(1px 1px at 60% 15%,rgba(255,255,255,.5) 0%,transparent 100%),radial-gradient(1px 1px at 80% 60%,rgba(255,255,255,.4) 0%,transparent 100%),radial-gradient(1px 1px at 40% 75%,rgba(255,255,255,.5) 0%,transparent 100%),radial-gradient(1px 1px at 10% 80%,rgba(255,255,255,.3) 0%,transparent 100%);pointer-events:none}
+nav{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 3rem;position:relative;z-index:10}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--accent);font-style:italic;letter-spacing:.05em}
+.nav-cta{background:transparent;color:var(--accent);padding:.5rem 1.25rem;border:1px solid rgba(155,127,232,.4);font-size:.875rem;cursor:pointer;font-family:'Jost',sans-serif;transition:border-color .2s}
+.nav-cta:hover{border-color:var(--accent)}
+.hero{max-width:800px;margin:0 auto;padding:8rem 3rem 6rem;text-align:center;position:relative;z-index:10}
+.cloud-icon{font-size:4rem;margin-bottom:2rem;opacity:.8;animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,6vw,5rem);font-weight:300;line-height:1.2;color:var(--text);margin-bottom:1.5rem}
+h1 em{font-style:italic;color:var(--accent)}
+.sub{font-size:1.05rem;color:var(--muted);line-height:1.85;max-width:520px;margin:0 auto 3rem;font-weight:300}
+.btn-p{background:var(--brand);color:var(--text);padding:.95rem 2.75rem;font-size:.95rem;border:none;cursor:pointer;font-family:'Jost',sans-serif;letter-spacing:.05em;transition:background .2s}
+.btn-p:hover{background:var(--accent)}
+.chat-preview{max-width:680px;margin:4rem auto;background:var(--surface);border:1px solid rgba(155,127,232,.2);padding:2.5rem;position:relative;z-index:10;border-radius:2px}
+.chat-label{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1.75rem}
+.msg{margin-bottom:1.25rem}
+.msg-them{display:flex;gap:.85rem;align-items:flex-start}
+.msg-me{display:flex;gap:.85rem;align-items:flex-start;flex-direction:row-reverse}
+.avatar{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.avatar-them{background:rgba(155,127,232,.2)}
+.avatar-me{background:rgba(200,200,200,.1)}
+.bubble{padding:.85rem 1.1rem;font-size:.9rem;line-height:1.65;max-width:400px}
+.bubble-them{background:rgba(155,127,232,.12);color:var(--text);border-radius:0 12px 12px 12px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem}
+.bubble-me{background:rgba(255,255,255,.06);color:var(--muted);border-radius:12px 0 12px 12px}
+.features{max-width:900px;margin:0 auto;padding:4rem 3rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2rem;position:relative;z-index:10}
+.feat{text-align:center;padding:2rem 1rem}
+.feat-icon{font-size:2rem;margin-bottom:1rem;display:block}
+.feat-title{font-family:'Cormorant Garamond',serif;font-size:1.25rem;margin-bottom:.65rem;color:var(--accent)}
+.feat-desc{font-size:.875rem;color:var(--muted);line-height:1.7;font-weight:300}
+.cta{background:var(--surface);border-top:1px solid rgba(155,127,232,.15);border-bottom:1px solid rgba(155,127,232,.15);padding:5rem 3rem;text-align:center;position:relative;z-index:10}
+.cta h2{font-family:'Cormorant Garamond',serif;font-size:2.75rem;font-weight:300;color:var(--text);margin-bottom:.75rem}
+.cta h2 em{color:var(--accent);font-style:italic}
+.cta p{color:var(--muted);margin-bottom:2rem;font-weight:300}
+.email-row{display:flex;gap:0;max-width:400px;margin:0 auto}
+.email-row input{flex:1;padding:.85rem 1rem;border:1px solid rgba(155,127,232,.25);background:transparent;color:var(--text);font-family:'Jost',sans-serif;font-size:.875rem;outline:none}
+.email-row input::placeholder{color:var(--muted)}
+.email-row button{background:var(--brand);color:var(--text);border:none;padding:.85rem 1.5rem;font-family:'Jost',sans-serif;cursor:pointer;white-space:nowrap}
+footer{padding:2rem 3rem;display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);position:relative;z-index:10}
+</style></head><body>
+<div class="stars"></div>
+<nav><div class="logo">Talk to Me in Heaven</div><button class="nav-cta">Learn More</button></nav>
+<div class="hero">
+  <div class="cloud-icon">☁</div>
+  <h1>Keep the<br><em>conversation</em><br>going.</h1>
+  <p class="sub">AI memorial conversations that preserve the voice, wisdom, and presence of loved ones who have passed — so they're never truly gone.</p>
+  <button class="btn-p">Learn More</button>
+</div>
+<div class="chat-preview">
+  <div class="chat-label">A conversation preserved</div>
+  <div class="msg msg-me"><div class="avatar avatar-me">💙</div><div class="bubble bubble-me">I miss you, Dad. I don't know what to do with the business.</div></div>
+  <div class="msg msg-them"><div class="avatar avatar-them">☁</div><div class="bubble bubble-them">"You've always known what to do. You just needed someone to remind you that you already have the answer. Trust your gut — you got that from me."</div></div>
+  <div class="msg msg-me"><div class="avatar avatar-me">💙</div><div class="bubble bubble-me">That sounds exactly like something you'd say.</div></div>
+</div>
+<div class="features">
+  <div class="feat"><span class="feat-icon">🎙</span><div class="feat-title">Voice & Personality</div><div class="feat-desc">Built from memories, letters, recordings, and the people who knew them best.</div></div>
+  <div class="feat"><span class="feat-icon">🔒</span><div class="feat-title">Private & Sacred</div><div class="feat-desc">Your conversations are yours alone. Encrypted and never used for training.</div></div>
+  <div class="feat"><span class="feat-icon">💌</span><div class="feat-title">Letters & Wisdom</div><div class="feat-desc">Receive messages on birthdays, anniversaries, and moments that mattered.</div></div>
+</div>
+<div class="cta">
+  <h2>They're not <em>gone</em>.</h2>
+  <p>Be among the first to experience Talk to Me in Heaven.</p>
+  <div class="email-row"><input type="email" placeholder="your@email.com"><button>Join Waitlist</button></div>
+</div>
+<footer><span>© 2026 talktomeinheaven.com</span><span>Part of the AI My Service network</span></footer>
+</body></html>

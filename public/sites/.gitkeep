@@ -1,0 +1,3 @@
+# Site folders land here after `npm run import:ftp`.
+# Each subdirectory is one domain; the folder name must match the live domain
+# (e.g. public/sites/aibiogenius.com/index.html).

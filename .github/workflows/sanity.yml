@@ -1,0 +1,36 @@
+name: Sanity
+
+# Replaces the old Nightly Sync. Now that Vercel is the source of truth for
+# what's live, the only thing worth checking is whether Porkbun, the repo,
+# and Vercel's DNS targets are still aligned.
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'   # Sundays 00:00 UTC — weekly is enough
+  workflow_dispatch: {}
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --omit=dev --no-audit --no-fund
+      - name: Verify DNS + folder coverage
+        env:
+          PORKBUN_API_KEY:    ${{ secrets.PORKBUN_API_KEY }}
+          PORKBUN_SECRET_KEY: ${{ secrets.PORKBUN_SECRET_KEY }}
+        run: node scripts/verify-dns.mjs | tee /tmp/sanity.txt
+      - name: Email report
+        if: always()
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: |
+          BODY=$(cat /tmp/sanity.txt | sed 's/$/\\n/' | tr -d '\n')
+          curl -X POST https://api.resend.com/emails \
+            -H "Authorization: Bearer $RESEND_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d "{\"from\":\"AI My Agents <agents@aimyresume.app>\",\"to\":[\"davefurano@gmail.com\"],\"subject\":\"Weekly sanity check\",\"html\":\"<pre style=font-family:monospace>${BODY}</pre>\"}"
